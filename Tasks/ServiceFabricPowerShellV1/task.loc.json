@@ -3,6 +3,7 @@
   "name": "ServiceFabricPowerShell",
   "friendlyName": "ms-resource:loc.friendlyName",
   "description": "ms-resource:loc.description",
+  "helpUrl": "https://go.microsoft.com/fwlink/?LinkID=841538",
   "helpMarkDown": "ms-resource:loc.helpMarkDown",
   "category": "Utility",
   "visibility": [
@@ -17,7 +18,7 @@
   "version": {
     "Major": 1,
     "Minor": 0,
-    "Patch": 16
+    "Patch": 21
   },
   "demands": [
     "Cmd"
@@ -89,6 +90,7 @@
     }
   },
   "messages": {
+    "CertNotPresentInLocalStoreWarningMsg": "ms-resource:loc.messages.CertNotPresentInLocalStoreWarningMsg",
     "InvalidScriptArguments0": "ms-resource:loc.messages.InvalidScriptArguments0",
     "InvalidScriptPath0": "ms-resource:loc.messages.InvalidScriptPath0"
   }

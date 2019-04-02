@@ -30,8 +30,8 @@
   "loc.messages.NoBuildCredentials": "Не удалось найти учетные данные сборки",
   "loc.messages.UnknownCommand": "Неизвестная команда: %s",
   "loc.messages.MultipleProjectConfigs": "Обнаружено несколько файлов NPMRC проекта в $s",
-  "loc.messages.ServiceEndpointNotDefined": "Не удалось найти конечную точку службы. Убедитесь в том, что выбранная конечная точка все еще существует.",
-  "loc.messages.ServiceEndpointUrlNotDefined": "Не удалось найти URL-адрес для конечной точки службы. Убедитесь в том, что конечная точка службы правильно настроена.",
+  "loc.messages.ServiceEndpointNotDefined": "Не удалось найти подключение службы. Убедитесь в том, что выбранное подключение службы все еще существует.",
+  "loc.messages.ServiceEndpointUrlNotDefined": "Не удалось найти URL-адрес подключения службы. Убедитесь в том, что подключение службы настроено правильно.",
   "loc.messages.SavingFile": "Сохраняется файл %s",
   "loc.messages.RestoringFile": "Восстанавливается файл %s",
   "loc.messages.PublishFeed": "Публикация во внутреннем веб-канале",
@@ -42,12 +42,13 @@
   "loc.messages.UsingRegistry": "Используется реестр: %s",
   "loc.messages.AddingAuthRegistry": "Добавление проверки подлинности для реестра: %s",
   "loc.messages.FoundLocalRegistries": "В этой учетной записи и коллекции найдено реестров: %d",
-  "loc.messages.ForcePackagingUrl": "Packaging collection url forced to: %s",
+  "loc.messages.ForcePackagingUrl": "Принудительная упаковка URL-адреса коллекции: %s",
   "loc.messages.DebugLogNotFound": "Не удалось найти журнал отладки в кэше или рабочем каталоге",
   "loc.messages.NpmFailed": "Сбой npm с кодом возврата: %s",
   "loc.messages.FoundNpmDebugLog": "Найден журнал отладки npm. Убедитесь в том, что путь соответствует указанному в выходных данных npm: %s",
   "loc.messages.TestDebugLog": "Проверяется расположение журнала отладки: %s",
   "loc.messages.OverridingProjectNpmrc": "Переопределение файла NPMRC проекта: %s",
   "loc.messages.RestoringProjectNpmrc": "Восстанавливается файл NPMRC проекта",
-  "loc.messages.WorkingDirectoryNotDirectory": "Измените рабочий каталог на допустимый"
+  "loc.messages.WorkingDirectoryNotDirectory": "Измените рабочий каталог на допустимый",
+  "loc.messages.NGCommon_AreaNotFoundInSps": "Не удается найти область \"%s\" [%s]. Возможно, служба, содержащая эту область, недоступна в вашем регионе."
 }

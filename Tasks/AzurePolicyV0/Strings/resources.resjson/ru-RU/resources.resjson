@@ -1,0 +1,11 @@
+{
+  "loc.friendlyName": "Оценка безопасности и соответствия требованиям",
+  "loc.description": "Оценка безопасности и соответствия политикам Azure для ресурсов, относящихся к группе ресурсов и подписке Azure",
+  "loc.instanceNameFormat": "Оценка соответствия политикам Azure для $(ResourceGroupName)",
+  "loc.input.label.ConnectedServiceName": "Подписка Azure",
+  "loc.input.help.ConnectedServiceName": "Выберите подписку Azure Resource Manager, к которой необходимо применить политики.",
+  "loc.input.label.ResourceGroupName": "Группа ресурсов",
+  "loc.input.help.ResourceGroupName": "Укажите имя группы ресурсов.",
+  "loc.input.label.Resources": "Имя ресурса",
+  "loc.input.help.Resources": "Выберите имя ресурсов Azure, соответствие политикам которых необходимо проверить."
+}

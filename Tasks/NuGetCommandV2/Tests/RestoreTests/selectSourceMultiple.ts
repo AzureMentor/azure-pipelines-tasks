@@ -1,5 +1,5 @@
-import ma = require('vsts-task-lib/mock-answer');
-import tmrm = require('vsts-task-lib/mock-run');
+import ma = require('azure-pipelines-task-lib/mock-answer');
+import tmrm = require('azure-pipelines-task-lib/mock-run');
 import path = require('path');
 import util = require('../NugetMockHelper');
 
@@ -46,7 +46,6 @@ process.env["NuGet_ForceEnableCredentialConfig"] = "false";
 nmh.registerNugetUtilityMock(["c:\\agent\\home\\directory\\packages.config"]);
 nmh.registerDefaultNugetVersionMock();
 nmh.registerToolRunnerMock();
-nmh.RegisterLocationServiceMocks();
 nmh.registerNugetConfigMock();
 
 tmr.run();

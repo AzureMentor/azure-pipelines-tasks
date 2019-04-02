@@ -3,6 +3,7 @@
     "name": "PowerShellOnTargetMachines",
     "friendlyName": "PowerShell on Target Machines",
     "description": "Execute PowerShell scripts on remote machine(s)",
+    "helpUrl": "https://go.microsoft.com/fwlink/?linkid=627414",
     "helpMarkDown": "[More Information](https://go.microsoft.com/fwlink/?linkid=627414)",
     "category": "Deploy",
     "visibility": [
@@ -13,7 +14,7 @@
     "version": {
         "Major": 2,
         "Minor": 0,
-        "Patch": 5
+        "Patch": 7
     },
     "releaseNotes": "What's new in Version 2.0: <br/>&nbsp;&nbsp; Removed support of legacy DTL machines.",
     "minimumAgentVersion": "1.104.0",

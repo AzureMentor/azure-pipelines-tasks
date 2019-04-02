@@ -11,7 +11,7 @@
   "loc.input.label.AdminUserName": "Informations de connexion d'administrateur",
   "loc.input.help.AdminUserName": "Informations de connexion d'administrateur pour les ordinateurs cibles.",
   "loc.input.label.AdminPassword": "Mot de passe",
-  "loc.input.help.AdminPassword": "Mot de passe de la connexion de l'administrateur pour les machines cibles. <br>Il peut accepter une variable définie dans les définitions Build/Release sous la forme '$(passwordVariable)'. <br>Vous pouvez marquer le type de variable en tant que 'secret' pour renforcer sa sécurité. ",
+  "loc.input.help.AdminPassword": "Mot de passe de la connexion de l'administrateur pour les machines cibles. <br>Il peut accepter une variable définie dans les définitions de build/mise en production sous la forme '$(passwordVariable)'. <br>Vous pouvez marquer le type de variable en tant que 'secret' pour renforcer sa sécurité. ",
   "loc.input.label.TargetPath": "Dossier de destination",
   "loc.input.help.TargetPath": "Chemin d'accès local sur les ordinateurs cibles ou chemin d'accès UNC accessible pour la copie des fichiers à partir de la source, par ex., d:\\fabrikam ou \\\\\\\\fabrikam\\Web.",
   "loc.input.label.CleanTargetBeforeCopy": "Nettoyer la cible",

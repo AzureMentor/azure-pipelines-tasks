@@ -1,12 +1,12 @@
 {
   "loc.friendlyName": "PyPI Publisher",
-  "loc.helpMarkDown": "[More Information](https://aka.ms/pypipublisher)",
-  "loc.description": "Publish Python packages to PyPI",
-  "loc.instanceNameFormat": "PyPI Publisher",
-  "loc.input.label.serviceEndpoint": "PyPI connection",
-  "loc.input.help.serviceEndpoint": "Select the generic service endpoint where PyPI server details are present. \n\nNote: To configure a new generic service endpoint, under your Azure Pipelines project, go to Settings -> Services -> New Service Endpoint -> Generic. \n\nConnection Name – Use a friendly connection name of your choice. \nServer URL – PyPI package server (for example: https://upload.pypi.org/legacy/). \nUser Name – PyPI registered username. \nPassword – password for your PyPI account",
-  "loc.input.label.wd": "Python package path",
-  "loc.input.help.wd": "Python package directory to be published, where setup.py is present.",
-  "loc.input.label.wheel": "Upload wheel",
-  "loc.input.help.wheel": "If checked, then task will additionally build and publish universal wheel (platform independent) of this package. For more information regarding universal wheel [see here](https://packaging.python.org/tutorials/distributing-packages/#wheels)."
+  "loc.helpMarkDown": "[詳細](https://go.microsoft.com/fwlink/?linkid=875289)",
+  "loc.description": "sdist または wheel を作成し、Twine を使用して PyPI 対応のインデックスにアップロードします。",
+  "loc.instanceNameFormat": "パッケージ化して PyPI へ発行する",
+  "loc.input.label.serviceEndpoint": "PyPI サービス接続",
+  "loc.input.help.serviceEndpoint": "パッケージ インデックスに接続するための汎用サービス接続です。",
+  "loc.input.label.wd": "Python パッケージ ディレクトリ",
+  "loc.input.help.wd": "setup.py が存在する、作成および発行される Python パッケージのディレクトリです。",
+  "loc.input.label.wheel": "wheel も発行",
+  "loc.input.help.wheel": "sdist パッケージに加えて、ユニバーサル wheel パッケージ (プラットフォームに依存しない) を作成して発行するかどうかを選択します。[詳細情報](https://packaging.python.org/tutorials/distributing-packages/#wheels)。"
 }

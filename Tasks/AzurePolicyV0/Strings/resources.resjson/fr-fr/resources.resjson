@@ -1,0 +1,11 @@
+{
+  "loc.friendlyName": "Évaluation de la sécurité et de la conformité",
+  "loc.description": "Évaluation de la sécurité et de la conformité par rapport aux stratégies Azure sur les ressources qui font partie du groupe de ressources et de l'abonnement Azure",
+  "loc.instanceNameFormat": "Évaluation de la conformité à Azure Policy pour $(ResourceGroupName)",
+  "loc.input.label.ConnectedServiceName": "Abonnement Azure",
+  "loc.input.help.ConnectedServiceName": "Sélectionnez l'abonnement Azure Resource Manager approprié pour appliquer les stratégies.",
+  "loc.input.label.ResourceGroupName": "Groupe de ressources",
+  "loc.input.help.ResourceGroupName": "Indiquez le nom d'un groupe de ressources.",
+  "loc.input.label.Resources": "Nom de la ressource",
+  "loc.input.help.Resources": "Sélectionnez le nom des ressources Azure dont vous souhaitez vérifier la conformité à la stratégie."
+}

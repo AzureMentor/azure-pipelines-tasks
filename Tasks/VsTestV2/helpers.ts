@@ -1,9 +1,8 @@
 import * as fs from 'fs';
-import * as tl from 'vsts-task-lib/task';
-import * as tr from 'vsts-task-lib/toolrunner';
+import * as tl from 'azure-pipelines-task-lib/task';
+import * as tr from 'azure-pipelines-task-lib/toolrunner';
 import * as path from 'path';
 import * as Q from 'q';
-import * as models from './models';
 import * as os from 'os';
 import * as ci from './cieventlogger';
 import * as constants from './constants';

@@ -48,12 +48,9 @@ process.env['ENDPOINT_URL_SYSTEMVSSCONNECTION'] = "https://example.visualstudio.
 process.env['SYSTEM_DEFAULTWORKINGDIRECTORY'] = "~/myagent/_work/1/s";
 process.env['SYSTEM_TEAMFOUNDATIONCOLLECTIONURI'] = "https://example.visualstudio.com/defaultcollection";
 
-tmr.registerMock('nuget-task-common/Utility', {
+tmr.registerMock('packaging-common/nuget/Utility', {
     resolveFilterSpec: function(filterSpec, basePath?, allowEmptyMatch?) {
         return ["~/myagent/_work/1/s/single.sln"];
-    },
-    getBundledNuGetLocation: function(version) {
-        return '~/myagent/_work/_tasks/NuGet/nuget.exe';
     },
     locateCredentialProvider: function(path) {
         return '~/myagent/_work/_tasks/NuGet/CredentialProvider';
@@ -72,5 +69,6 @@ tmr.registerMock('./Utility', {
 
 nmh.registerDefaultNugetVersionMock();
 nmh.registerToolRunnerMock();
+nmh.registerNugetConfigMock();
 
 tmr.run();

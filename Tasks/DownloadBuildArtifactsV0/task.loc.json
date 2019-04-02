@@ -3,13 +3,14 @@
   "name": "DownloadBuildArtifacts",
   "friendlyName": "ms-resource:loc.friendlyName",
   "description": "ms-resource:loc.description",
+  "helpUrl": "",
   "helpMarkDown": "ms-resource:loc.helpMarkDown",
   "category": "Utility",
   "author": "Microsoft Corporation",
   "version": {
     "Major": 0,
-    "Minor": 142,
-    "Patch": 0
+    "Minor": 148,
+    "Patch": 1
   },
   "groups": [
     {
@@ -85,6 +86,15 @@
       }
     },
     {
+      "name": "allowPartiallySucceededBuilds",
+      "type": "boolean",
+      "label": "ms-resource:loc.input.label.allowPartiallySucceededBuilds",
+      "defaultValue": "false",
+      "visibleRule": "buildType == specific && buildVersionToDownload != specific",
+      "required": false,
+      "helpMarkDown": "ms-resource:loc.input.help.allowPartiallySucceededBuilds"
+    },
+    {
       "name": "branchName",
       "type": "string",
       "label": "ms-resource:loc.input.label.branchName",
@@ -107,13 +117,13 @@
       "helpMarkDown": "ms-resource:loc.input.help.buildId"
     },
     {
-      "name": "Tags",
+      "name": "tags",
       "type": "string",
-      "label": "ms-resource:loc.input.label.Tags",
+      "label": "ms-resource:loc.input.label.tags",
       "defaultValue": "",
       "visibleRule": "buildType == specific && buildVersionToDownload != specific",
       "required": false,
-      "helpMarkDown": "ms-resource:loc.input.help.Tags"
+      "helpMarkDown": "ms-resource:loc.input.help.tags"
     },
     {
       "name": "downloadType",
@@ -188,7 +198,7 @@
       "resultSelector": "jsonpath:$.value[?(@.quality=='definition')]",
       "parameters": {
         "project": "$(project)",
-        "name": "$(name)"
+        "name": "$(searchText)"
       },
       "resultTemplate": "{ \"Value\" : \"{{{id}}}\", \"DisplayValue\" : \"{{{name}}}\" }",
       "callbackContextTemplate": "{\"continuationToken\" : \"{{{headers.x-ms-continuationtoken}}}\"}",

@@ -72,9 +72,10 @@ function substituteValueinParameterFile(parameterFilePath, parameterSubValue) {
     tl.debug("Parameter file " + parameterFilePath + " updated.");
 }
 
-export function substituteAppSettingsVariables(folderPath, isFolderBasedDeployment) {
-    var configFiles = tl.findMatch(folderPath, "**/*.config");
-    var parameterFilePath = path.join(folderPath, 'parameters.xml');
+export function substituteAppSettingsVariables(folderPath, isFolderBasedDeployment, fileName?: string) {
+    var configFiles = tl.findMatch(folderPath, fileName ? fileName : "**/*.config");
+    // parameters.xml is considered when fileName is not provided or filename explicitly mentions parameters.xml
+    var parameterFilePath = !fileName || fileName.toLocaleLowerCase().indexOf("parameters.xml") != -1 ? path.join(folderPath, 'parameters.xml') : null;
     if(!isFolderBasedDeployment && tl.exist(parameterFilePath)) {
         tl.debug('Detected parameters.xml file - XML variable substitution');
     }
@@ -195,7 +196,7 @@ function updateXmlNodeAttribute(xmlDomNode, variableMap, replacableTokenValues):
         var attributeNameValue = (attributeName === "key" || attributeName == "name") ? xmlDomNodeAttributes[attributeName] : attributeName;
         var attributeName = (attributeName === "key" || attributeName == "name") ? "value" : attributeName;
 
-        if(variableMap[attributeNameValue]) {
+        if(variableMap[attributeNameValue] != undefined) {
             var ConfigFileAppSettingsTokenName = ConfigFileAppSettingsToken + '(' + attributeNameValue + ')';
             let isValueReplaced: boolean = false;
             if(xmlDomNode.getAttr(attributeName) != undefined) {
@@ -248,7 +249,7 @@ function updateXmlConnectionStringsNodeAttribute(xmlDomNode, variableMap, replac
             replacableTokenValues[ConfigFileConnStringTokenName] = variableMap[xmlDomNodeAttributes.name].replace(/"/g, "'");
             isSubstitutionApplied = true;
         }
-        else if(variableMap["connectionString"]) {
+        else if(variableMap["connectionString"] != undefined) {
             var ConfigFileConnStringTokenName = ConfigFileConnStringToken + '(connectionString)';
             tl.debug('Substituting connectionString value for connectionString=' + xmlDomNodeAttributes.name + ' with token_value: ' + ConfigFileConnStringTokenName);
             xmlDomNode.attr("connectionString", ConfigFileConnStringTokenName);

@@ -3,9 +3,9 @@
 import path = require('path');
 import * as tl from "vsts-task-lib/task";
 import ContainerConnection from "docker-common/containerconnection";
-import AuthenticationTokenProvider  from "docker-common/registryauthenticationprovider/authenticationtokenprovider"
-import ACRAuthenticationTokenProvider from "docker-common/registryauthenticationprovider/acrauthenticationtokenprovider"
-import GenericAuthenticationTokenProvider from "docker-common/registryauthenticationprovider/genericauthenticationtokenprovider"
+import AuthenticationTokenProvider  from "docker-common/registryauthenticationprovider/authenticationtokenprovider";
+import ACRAuthenticationTokenProvider from "docker-common/registryauthenticationprovider/acrauthenticationtokenprovider";
+import GenericAuthenticationTokenProvider from "docker-common/registryauthenticationprovider/genericauthenticationtokenprovider";
 import Q = require('q');
 
 tl.setResourcePath(path.join(__dirname, 'task.json'));
@@ -14,14 +14,23 @@ tl.setResourcePath(path.join(__dirname, 'task.json'));
 tl.cd(tl.getInput("cwd"));
 
 // get the registry server authentication provider 
-var registryType = tl.getInput("containerregistrytype", true);
+var containerRegistryType = tl.getInput("containerregistrytype", true);
 var authenticationProvider : AuthenticationTokenProvider;
+const environmentVariableMaximumSize = 32766;
 
-if(registryType ==  "Azure Container Registry"){
+if(containerRegistryType ==  "Azure Container Registry"){
     authenticationProvider = new ACRAuthenticationTokenProvider(tl.getInput("azureSubscriptionEndpoint"), tl.getInput("azureContainerRegistry"));
 } 
 else {
-    authenticationProvider = new GenericAuthenticationTokenProvider(tl.getInput("dockerRegistryEndpoint"));
+    let endpointId = tl.getInput("dockerRegistryEndpoint");
+    const registryType: string = tl.getEndpointDataParameter(endpointId, "registrytype", true);
+    if(registryType ==  "ACR"){
+        const loginServer = tl.getEndpointAuthorizationParameter(endpointId, "loginServer", false);
+        authenticationProvider = new ACRAuthenticationTokenProvider(endpointId, loginServer);
+    }
+    else {
+        authenticationProvider = new GenericAuthenticationTokenProvider(tl.getInput("dockerRegistryEndpoint"));
+    }
 }
 
 var registryAuthenticationToken = authenticationProvider.getAuthenticationToken();
@@ -32,10 +41,37 @@ connection.open(tl.getInput("dockerHostEndpoint"), registryAuthenticationToken);
 
 // Run the specified action
 var action = tl.getInput("action", true).toLowerCase();
+let command = "";
+
+if(action !== "run a docker command") {
+    command = action;
+}
+else {
+    let customCommand = tl.getInput("customCommand", true);
+
+    // sanitize the custom command parameters to log just the action
+    let commandTokens = customCommand.split(" ");
+    if(commandTokens.length > 0) {
+        for(let index = 0; index < commandTokens.length; index ++) {
+            // Stop reading tokens when we see any that starts with a special character
+            if(/^[a-z0-9A-Z]/i.test(commandTokens[index])) {
+                command = command + commandTokens[index] + " ";
+            }
+            else{
+                break;
+            }
+        }
+        command = command.trim();
+    }
+    else {
+        command = "run a docker command"
+    }
+}
+
 var result = "";
 var telemetry = {
-    registryType: registryType,
-    command: action !== "run a docker command" ? action : tl.getInput("customCommand", true)
+    registryType: containerRegistryType,
+    command: command
 };
 
 console.log("##vso[telemetry.publish area=%s;feature=%s]%s",
@@ -57,7 +93,13 @@ require({
     connection.close();
 })
 .then(function success() {
-    tl.setVariable("DockerOutput", result);
+    var commandOutputLength = result.length;
+    if (commandOutputLength > environmentVariableMaximumSize) {
+        tl.warning(tl.loc('OutputVariableDataSizeExceeded', commandOutputLength, environmentVariableMaximumSize));
+    } else {
+        tl.setVariable("DockerOutput", result);
+    }
+
     tl.setResult(tl.TaskResult.Succeeded, "");
 }, function failure(err) {
     tl.setResult(tl.TaskResult.Failed, err.message);

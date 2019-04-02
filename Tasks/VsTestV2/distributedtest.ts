@@ -1,20 +1,13 @@
 import * as fs from 'fs';
 import * as path from 'path';
-import * as ps from 'child_process';
-import * as tl from 'vsts-task-lib/task';
-import * as tr from 'vsts-task-lib/toolrunner';
-import * as models from './models';
-import * as constants from './constants';
+import * as tl from 'azure-pipelines-task-lib/task';
+import * as tr from 'azure-pipelines-task-lib/toolrunner';
 import * as inputdatacontract from './inputdatacontract';
-import * as settingsHelper from './settingshelper';
 import * as utils from './helpers';
-import * as ta from './testagent';
-import * as versionFinder from './versionfinder';
 import * as os from 'os';
 import * as ci from './cieventlogger';
 import { TestSelectorInvoker } from './testselectorinvoker';
 import { writeFileSync } from 'fs';
-import { TaskResult } from 'vso-node-api/interfaces/TaskAgentInterfaces';
 import * as uuid from 'uuid';
 
 const testSelector = new TestSelectorInvoker();
@@ -36,15 +29,15 @@ export class DistributedTest {
 
             if (exitCode !== 0) {
                 tl.debug('Modules/DTAExecutionHost.exe process exited with code ' + exitCode);
-                tl.setResult(tl.TaskResult.Failed, 'Modules/DTAExecutionHost.exe process exited with code ' + exitCode);
+                tl.setResult(tl.TaskResult.Failed, 'Modules/DTAExecutionHost.exe process exited with code ' + exitCode, true);
             } else {
                 tl.debug('Modules/DTAExecutionHost.exe exited');
-                tl.setResult(tl.TaskResult.Succeeded, 'Task succeeded');
+                tl.setResult(tl.TaskResult.Succeeded, 'Task succeeded', true);
             }
         } catch (error) {
             ci.publishEvent({ environmenturi: this.inputDataContract.RunIdentifier, error: error });
             tl.error(error);
-            tl.setResult(tl.TaskResult.Failed, error);
+            tl.setResult(tl.TaskResult.Failed, error, true);
         }
     }
 
@@ -66,8 +59,7 @@ export class DistributedTest {
         // Pass the acess token as an environment variable for security purposes
         utils.Helper.addToProcessEnvVars(envVars, 'DTA.AccessToken', tl.getEndpointAuthorization('SystemVssConnection', true).parameters.AccessToken);
 
-        if(this.inputDataContract.ExecutionSettings.DiagnosticsSettings.Enabled)
-        {
+        if (this.inputDataContract.ExecutionSettings.DiagnosticsSettings.Enabled) {
             utils.Helper.addToProcessEnvVars(envVars, 'PROCDUMP_PATH', path.join(__dirname, 'ProcDump'));
         }
 
@@ -79,10 +71,6 @@ export class DistributedTest {
             writeFileSync(inputFilePath, JSON.stringify(this.inputDataContract));
         } catch (e) {
             tl.setResult(tl.TaskResult.Failed, `Failed to write to the input json file ${inputFilePath} with error ${e}`);
-        }
-
-        if (utils.Helper.isDebugEnabled()) {
-            utils.Helper.uploadFile(inputFilePath);
         }
 
         const dtaExecutionHostTool = tl.tool(path.join(__dirname, 'Modules/DTAExecutionHost.exe'));

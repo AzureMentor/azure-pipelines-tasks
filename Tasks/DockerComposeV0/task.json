@@ -3,6 +3,7 @@
     "name": "DockerCompose",
     "friendlyName": "Docker Compose",
     "description": "Build, push or run multi-container Docker applications. Task can be used with Docker or Azure Container registry.",
+    "helpUrl": "https://go.microsoft.com/fwlink/?linkid=848006",
     "helpMarkDown": "[More Information](https://go.microsoft.com/fwlink/?linkid=848006)",
     "category": "Build",
     "visibility": [
@@ -12,8 +13,8 @@
     "author": "Microsoft Corporation",
     "version": {
         "Major": 0,
-        "Minor": 4,
-        "Patch": 22
+        "Minor": 150,
+        "Patch": 3
     },
     "demands": [],
     "preview": "false",
@@ -46,7 +47,9 @@
         },
         {
             "name": "azureSubscriptionEndpoint",
-            "aliases": ["azureSubscription"],
+            "aliases": [
+                "azureSubscription"
+            ],
             "type": "connectedService:AzureRM",
             "label": "Azure subscription",
             "helpMarkDown": "Select an Azure subscription",
@@ -186,7 +189,9 @@
         },
         {
             "name": "workDir",
-            "aliases": ["workingDirectory"],
+            "aliases": [
+                "workingDirectory"
+            ],
             "type": "string",
             "label": "Working Directory",
             "visibleRule": "action = Run a specific service",
@@ -288,7 +293,9 @@
         },
         {
             "name": "cwd",
-            "aliases": ["currentWorkingDirectory"],
+            "aliases": [
+                "currentWorkingDirectory"
+            ],
             "type": "filePath",
             "label": "Working Directory",
             "defaultValue": "$(System.DefaultWorkingDirectory)",
@@ -314,11 +321,12 @@
     "messages": {
         "ContainerPatternFound": "Pattern found in docker compose filepath parameter",
         "ContainerPatternNotFound": "No pattern found in docker compose filepath parameter",
-        "ContainerDockerFileNotFound":"No Docker file matching  %s  was found.",
+        "ContainerDockerFileNotFound": "No Docker file matching  %s  was found.",
         "AdditionalDockerComposeFileDoesNotExists": "Additional Docker Compose File %s does not exists.",
         "CantWriteDataToFile": "Can not write data to the file %s. Error: %s",
-        "NoDataWrittenOnFile":"No data was written into the file %s",
+        "NoDataWrittenOnFile": "No data was written into the file %s",
         "FileContentSynced": "Synced the file content to the disk. The content is %s.",
-        "ImageNameWithoutTag": "Image name not specified with tag, pushing all tags of the image specified."
+        "ImageNameWithoutTag": "Image name not specified with tag, pushing all tags of the image specified.",
+        "WritingDockerConfigToTempFile": "Writing Docker config to temp file. File path: %s, Docker config: %s"
     }
 }

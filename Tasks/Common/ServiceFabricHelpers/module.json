@@ -1,6 +1,7 @@
 {
     "messages": {
         "AadAuthority": "AAD Authority: {0}",
+        "CertNotPresentInLocalStoreWarningMsg": "The certificate with thumbprint {0} is not present in the local certificate store. This can potentially cause errors. If the release/build fails, please re-try it or ensure that multiple agents are not running builds/releases using the same service endpoint simultaneously on the same machine.",
         "ClientAppId": "Client Application ID: {0}",
         "ClusterAppId": "Cluster Application ID: {0}",
         "ConnectedToCluster": "Successfully connected to cluster.",
@@ -14,6 +15,7 @@
         "RetryingClusterConnection": "Retrying to connect to cluster..",
         "WarningOnRemoveCertificate": "An error occurred attempting to remove the client certificate. Error message: {0}",
         "TelemetryWarning": "Unable to push telemetry data. Error: {0}.",
-        "SfSdkVersion": "Service fabric SDK version: {0}."
+        "SfSdkVersion": "Service fabric SDK version: {0}.",
+        "TaskNotRunningOnx64Agent": "The agent is not a x64 agent. This task is supported only on a x64 agent."
     }
 }

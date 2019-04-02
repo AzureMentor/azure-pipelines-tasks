@@ -115,6 +115,26 @@ describe('AzureRmWebAppDeployment Suite', function() {
         done();
     });
 
+    it('Runs successfully with JSON variable substitution V2', (done:MochaDone) => {
+        let tp = path.join(__dirname, "..", "node_modules", "webdeployment-common", "Tests", 'L1JsonVarSubV2.js');
+        let tr : ttm.MockTestRunner = new ttm.MockTestRunner(tp);
+        tr.run();
+
+        assert(tr.stdout.search('JSON - simple string change validated') > 0,'JSON -simple string change validation error' );
+        assert(tr.stdout.search('JSON - system variable elimination validated') > 0, 'JSON -system variable elimination validation error');
+        assert(tr.stdout.search('JSON - special variables validated') > 0, 'JSON - special variables validation error');
+        assert(tr.stdout.search('JSON - substitute inbuilt JSON attributes validated') > 0, 'JSON inbuilt variable substitution validation error');
+        assert(tr.stdout.search('JSON - Array Object validated') > 0, 'JSON - Array Object validation error');
+        assert(tr.stdout.search('JSON - Boolean validated') > 0, 'JSON - Boolean validation error');
+        assert(tr.stdout.search('(float)') > 0, 'JSON - Number(float) validation error');
+        assert(tr.stdout.search('(int)') > 0, 'JSON - Number(int) validation error');
+        assert(tr.stdout.search('JSON - Object validated') > 0, 'JSON - Object validation error');
+        assert(tr.stdout.search('VALID JSON COMMENTS TESTS PASSED') > 0, 'VALID JSON COMMENTS TESTS PASSED');
+        assert(tr.stdout.search('INVALID JSON COMMENTS TESTS PASSED') > 0, 'INVALID JSON COMMENTS TESTS PASSED');
+        assert(tr.succeeded, 'task should have succeeded');
+        done();
+    });
+
     it('Validate File Encoding', (done:MochaDone) => {
         let tp = path.join(__dirname, "..", "node_modules", "webdeployment-common", "Tests", 'L1ValidateFileEncoding.js');
         let tr : ttm.MockTestRunner = new ttm.MockTestRunner(tp);
@@ -173,7 +193,7 @@ describe('AzureRmWebAppDeployment Suite', function() {
         let tr : ttm.MockTestRunner = new ttm.MockTestRunner(tp);
         try {
             tr.run();
-            assert(tr.stdOutContained('set AppServiceApplicationUrl=http://mytestapp.azurewebsites.net'), 'Should have printed: set AppServiceApplicationUrl=http://mytestapp.azurewebsites.net');
+            assert(tr.stdOutContained('Resource Group: MOCK_RESOURCE_GROUP_NAME'), 'Should have printed: Resource Group: MOCK_RESOURCE_GROUP_NAME');
             assert(tr.stdOutContained('PreDeployment steps with slot enabled should succeeded'), 'Should have printed: PreDeployment steps withSlotEnabled should succeeded');
             assert(tr.stdOutContained('Active DeploymentId :MOCK_DEPLOYMENT_ID'), 'Should have printed: Active DeploymentId :MOCK_DEPLOYMENT_ID.');
             assert(tr.stdOutContained('PreDeployment steps with virtual application should succeeded'), 'Should have printed: PreDeployment steps with slot enabled should succeeded');
@@ -213,7 +233,7 @@ describe('AzureRmWebAppDeployment Suite', function() {
             tr.run();
             assert(tr.stdOutContained('PreDeployment steps for container web app should succeeded'), 'Should have printed: PreDeployment steps for container web app should succeeded');
             assert(tr.stdOutContained('PreDeployment steps for container web app with slot enabled should succeeded'), 'Should have printed: PreDeployment steps for container web app withSlotEnabled should succeeded');
-            assert(tr.stdOutContained('set AppServiceApplicationUrl=http://mytestapp.azurewebsites.net'), 'Should have printed: set AppServiceApplicationUrl=http://mytestapp.azurewebsites.net');
+            assert(tr.stdOutContained('Resource Group: MOCK_RESOURCE_GROUP_NAME'), 'Should have printed: Resource Group: MOCK_RESOURCE_GROUP_NAME');
             assert(tr.stdOutContained('Active DeploymentId :MOCK_DEPLOYMENT_ID'), 'Should have printed: Active DeploymentId :MOCK_DEPLOYMENT_ID.');
             assert(tr.stdOutContained('loc_mock_UpdatingAppServiceConfigurationSettings {"appCommandLine":null,"linuxFxVersion":"DOCKER|dockernamespace/dockerrepository:DockerImageTag"}'), 'Should have printed: loc_mock_UpdatingAppServiceConfigurationSettings {"appCommandLine":null,"linuxFxVersion":"DOCKER|dockernamespace/dockerrepository:DockerImageTag"}');
             assert(tr.stdOutContained('loc_mock_UpdatedAppServiceConfigurationSettings'), 'Should have printed: loc_mock_UpdatedAppServiceConfigurationSettings');

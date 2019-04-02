@@ -3,20 +3,22 @@
     "name": "NuGetCommand",
     "friendlyName": "NuGet",
     "description": "Restore, pack, or push NuGet packages, or run a NuGet command. Supports NuGet.org and authenticated feeds like Package Management and MyGet. Uses NuGet.exe and works with .NET Framework apps. For .NET Core and .NET Standard apps, use the .NET Core task.",
+    "helpUrl": "https://go.microsoft.com/fwlink/?LinkID=613747",
     "helpMarkDown": "[More Information](https://go.microsoft.com/fwlink/?LinkID=613747)",
     "category": "Package",
     "author": "Microsoft Corporation",
     "version": {
         "Major": 2,
-        "Minor": 0,
-        "Patch": 43
+        "Minor": 150,
+        "Patch": 2
     },
     "runsOn": [
         "Agent",
         "DeploymentGroup"
     ],
     "minimumAgentVersion": "2.115.0",
-    "groups": [{
+    "groups": [
+        {
             "name": "restoreAuth",
             "displayName": "Feeds and authentication",
             "isExpanded": true,
@@ -48,7 +50,8 @@
         }
     ],
     "instanceNameFormat": "NuGet $(command)",
-    "inputs": [{
+    "inputs": [
+        {
             "name": "command",
             "type": "pickList",
             "label": "Command",
@@ -65,10 +68,11 @@
                 "custom": "custom"
             }
         },
-
         {
             "name": "solution",
-            "aliases": ["restoreSolution"],
+            "aliases": [
+                "restoreSolution"
+            ],
             "type": "filePath",
             "label": "Path to solution, packages.config, or project.json",
             "defaultValue": "**/*.sln",
@@ -78,7 +82,9 @@
         },
         {
             "name": "selectOrConfig",
-            "aliases": ["feedsToUse"],
+            "aliases": [
+                "feedsToUse"
+            ],
             "type": "radio",
             "label": "Feeds to use",
             "defaultValue": "select",
@@ -92,7 +98,9 @@
         },
         {
             "name": "feedRestore",
-            "aliases": ["vstsFeed"],
+            "aliases": [
+                "vstsFeed"
+            ],
             "type": "pickList",
             "label": "Use packages from this Azure Artifacts/TFS feed",
             "defaultValue": "",
@@ -126,11 +134,13 @@
         },
         {
             "name": "externalEndpoints",
-            "aliases": ["externalFeedCredentials"],
+            "aliases": [
+                "externalFeedCredentials"
+            ],
             "type": "connectedService:ExternalNuGetFeed",
-            "label": "Credentials for feeds outside this account/collection",
+            "label": "Credentials for feeds outside this organization/collection",
             "required": false,
-            "helpMarkDown": "Credentials to use for external registries located in the selected NuGet.config. For feeds in this account/collection, leave this blank; the build’s credentials are used automatically.",
+            "helpMarkDown": "Credentials to use for external registries located in the selected NuGet.config. For feeds in this organization/collection, leave this blank; the build’s credentials are used automatically.",
             "properties": {
                 "EditableOptions": "False",
                 "MultiSelectFlatList": "True"
@@ -158,7 +168,9 @@
         },
         {
             "name": "packagesDirectory",
-            "aliases": ["restoreDirectory"],
+            "aliases": [
+                "restoreDirectory"
+            ],
             "type": "string",
             "label": "Destination directory",
             "defaultValue": "",
@@ -180,10 +192,11 @@
                 "Detailed": "Detailed"
             }
         },
-
         {
             "name": "searchPatternPush",
-            "aliases": ["packagesToPush"],
+            "aliases": [
+                "packagesToPush"
+            ],
             "type": "filePath",
             "label": "Path to NuGet package(s) to publish",
             "defaultValue": "$(Build.ArtifactStagingDirectory)/**/*.nupkg;!$(Build.ArtifactStagingDirectory)/**/*.symbols.nupkg",
@@ -198,19 +211,30 @@
             "required": true,
             "defaultValue": "internal",
             "options": {
-                "internal": "This account/collection",
+                "internal": "This organization/collection",
                 "external": "External NuGet server (including other accounts/collections)"
             },
             "visibleRule": "command = push"
         },
         {
             "name": "feedPublish",
-            "aliases": ["publishVstsFeed"],
+            "aliases": [
+                "publishVstsFeed"
+            ],
             "type": "pickList",
             "label": "Target feed",
             "defaultValue": "",
             "required": true,
             "helpMarkDown": "Select a feed hosted in this account. You must have Package Management installed and licensed to select a feed here.",
+            "visibleRule": "command = push && nuGetFeedType = internal"
+        },
+        {
+            "name": "publishPackageMetadata",
+            "groupName": "pushAdvanced",
+            "type": "boolean",
+            "label": "Publish pipeline metadata",
+            "defaultValue": true,
+            "helpMarkDown": "Associate this build/release pipeline’s metadata (run #, source code information) with the package",
             "visibleRule": "command = push && nuGetFeedType = internal"
         },
         {
@@ -224,7 +248,9 @@
         },
         {
             "name": "externalEndpoint",
-            "aliases": ["publishFeedCredentials"],
+            "aliases": [
+                "publishFeedCredentials"
+            ],
             "type": "connectedService:ExternalNuGetFeed",
             "label": "NuGet server",
             "required": true,
@@ -245,10 +271,11 @@
                 "Detailed": "Detailed"
             }
         },
-
         {
             "name": "searchPatternPack",
-            "aliases": ["packagesToPack"],
+            "aliases": [
+                "packagesToPack"
+            ],
             "type": "filePath",
             "label": "Path to csproj or nuspec file(s) to pack",
             "defaultValue": "**/*.csproj",
@@ -258,7 +285,9 @@
         },
         {
             "name": "configurationToPack",
-            "aliases": ["configuration"],
+            "aliases": [
+                "configuration"
+            ],
             "type": "string",
             "label": "Configuration to package",
             "defaultValue": "$(BuildConfiguration)",
@@ -268,7 +297,9 @@
         },
         {
             "name": "outputDir",
-            "aliases": ["packDestination"],
+            "aliases": [
+                "packDestination"
+            ],
             "type": "filePath",
             "label": "Package folder",
             "defaultValue": "$(Build.ArtifactStagingDirectory)",
@@ -312,7 +343,9 @@
         },
         {
             "name": "requestedMajorVersion",
-            "aliases": ["majorVersion"],
+            "aliases": [
+                "majorVersion"
+            ],
             "type": "string",
             "label": "Major",
             "defaultValue": "1",
@@ -323,7 +356,9 @@
         },
         {
             "name": "requestedMinorVersion",
-            "aliases": ["minorVersion"],
+            "aliases": [
+                "minorVersion"
+            ],
             "type": "string",
             "label": "Minor",
             "defaultValue": "0",
@@ -334,7 +369,9 @@
         },
         {
             "name": "requestedPatchVersion",
-            "aliases": ["patchVersion"],
+            "aliases": [
+                "patchVersion"
+            ],
             "type": "string",
             "label": "Patch",
             "defaultValue": "0",
@@ -405,18 +442,18 @@
                 "Detailed": "Detailed"
             }
         },
-
         {
             "name": "arguments",
             "type": "string",
             "label": "Command and arguments",
             "defaultValue": "",
-            "helpMarkDown": "The command and arguments which will be passed to NuGet.exe for execution. If NuGet 3.5 or later is used, authenticated commands like list, restore, and publish against any feed in this account/collection that the Project Collection Build Service has access to will be automatically authenticated.",
+            "helpMarkDown": "The command and arguments which will be passed to NuGet.exe for execution. If NuGet 3.5 or later is used, authenticated commands like list, restore, and publish against any feed in this organization/collection that the Project Collection Build Service has access to will be automatically authenticated.",
             "required": true,
             "visibleRule": "command = custom"
         }
     ],
-    "dataSourceBindings": [{
+    "dataSourceBindings": [
+        {
             "target": "feedRestore",
             "endpointId": "tfs:feed",
             "endpointUrl": "{{endpoint.url}}/_apis/packaging/feeds",
@@ -449,7 +486,6 @@
         "UnknownRestoreMode": "Unknown restore mode '%s'",
         "CouldNotFindNuGetService": "Could not find the NuGet service. This task will be unable to authenticate to feeds hosted in your Azure Pipelines/TFS project collection.",
         "NoNuGetSpecified": "If 'custom' is selected, you must provide a path to NuGet.exe",
-
         "Warning_AutomaticallyVersionReferencedProjects": "The automatic package versioning and include referenced projects options do not work together. Referenced projects will not inherit the custom version provided by the automatic versioning settings.",
         "Error_AutomaticallyVersionReleases": "Autoversion: Getting version number from build option is not supported in releases",
         "Error_NoVersionFoundInBuildNumber": "Could not find version number data in the following environment variable: BUILD_BUILDNUMBER. The value of the variable should contain a substring with the following formats: X.Y.Z or X.Y.Z.A where A, X, Y, and Z are positive integers.",
@@ -457,7 +493,6 @@
         "Error_NoValueFoundForEnvVar": "No value was found for the provided environment variable.",
         "Error_PackageFailure": "An error ocurred while trying to pack the files.",
         "Info_AttemptingToPackFile": "Attempting to pack file: ",
-
         "Warning_NoConfigForOldNuGet": "To connect to NuGet feeds hosted in your Azure Pipelines/TFS project collection with NuGet 3.1 or below, edit your build pipeline to specify a path to a NuGet.config containing the package sources you wish to use.",
         "PackagesPublishedSuccessfully": "Packages were published successfully",
         "PackagesFailedToPublish": "Packages failed to publish",

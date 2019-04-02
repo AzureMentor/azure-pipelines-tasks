@@ -3,6 +3,7 @@
     "name": "AzureCloudPowerShellDeployment",
     "friendlyName": "Azure Cloud Service Deployment",
     "description": "Deploy an Azure Cloud Service",
+    "helpUrl": "https://go.microsoft.com/fwlink/?LinkID=613748",
     "helpMarkDown": "[More Information](https://go.microsoft.com/fwlink/?LinkID=613748)",
     "category": "Deploy",
     "visibility": [
@@ -16,7 +17,7 @@
     "version": {
         "Major": 1,
         "Minor": 3,
-        "Patch": 9
+        "Patch": 13
     },
     "demands": [
         "azureps"
@@ -32,7 +33,9 @@
     "inputs": [
         {
             "name": "ConnectedServiceName",
-            "aliases": ["azureClassicSubscription"],
+            "aliases": [
+                "azureClassicSubscription"
+            ],
             "type": "connectedService:Azure:Certificate,UsernamePassword",
             "label": "Azure subscription (Classic)",
             "defaultValue": "",
@@ -90,7 +93,9 @@
         },
         {
             "name": "Slot",
-            "aliases": ["slotName"],
+            "aliases": [
+                "slotName"
+            ],
             "type": "string",
             "label": "Environment (Slot)",
             "defaultValue": "Production",

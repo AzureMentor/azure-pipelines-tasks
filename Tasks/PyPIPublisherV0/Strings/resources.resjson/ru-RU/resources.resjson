@@ -1,12 +1,12 @@
 {
-  "loc.friendlyName": "PyPI Publisher",
-  "loc.helpMarkDown": "[More Information](https://aka.ms/pypipublisher)",
-  "loc.description": "Publish Python packages to PyPI",
-  "loc.instanceNameFormat": "PyPI Publisher",
-  "loc.input.label.serviceEndpoint": "PyPI connection",
-  "loc.input.help.serviceEndpoint": "Select the generic service endpoint where PyPI server details are present. \n\nNote: To configure a new generic service endpoint, under your Azure Pipelines project, go to Settings -> Services -> New Service Endpoint -> Generic. \n\nConnection Name – Use a friendly connection name of your choice. \nServer URL – PyPI package server (for example: https://upload.pypi.org/legacy/). \nUser Name – PyPI registered username. \nPassword – password for your PyPI account",
-  "loc.input.label.wd": "Python package path",
-  "loc.input.help.wd": "Python package directory to be published, where setup.py is present.",
-  "loc.input.label.wheel": "Upload wheel",
-  "loc.input.help.wheel": "If checked, then task will additionally build and publish universal wheel (platform independent) of this package. For more information regarding universal wheel [see here](https://packaging.python.org/tutorials/distributing-packages/#wheels)."
+  "loc.friendlyName": "Издатель PyPI",
+  "loc.helpMarkDown": "[Дополнительные сведения](https://go.microsoft.com/fwlink/?linkid=875289)",
+  "loc.description": "Создайте и отправьте sdist или wheel в совместимый с PyPI индекс с помощью Twine.",
+  "loc.instanceNameFormat": "Упаковка и публикация в PyPI",
+  "loc.input.label.serviceEndpoint": "Подключение к службе PyPI",
+  "loc.input.help.serviceEndpoint": "Универсальное подключение к службе для подключения к индексу пакетов.",
+  "loc.input.label.wd": "Каталог пакетов Python",
+  "loc.input.help.wd": "Каталог пакета Python, который необходимо создать и опубликовать, с файлом setup.py.",
+  "loc.input.label.wheel": "Также опубликовать wheel",
+  "loc.input.help.wheel": "Укажите, следует ли создать и опубликовать универсальный пакет wheel (независимый от платформы) в дополнение к пакету sdist. [Дополнительные сведения](https://packaging.python.org/tutorials/distributing-packages/#wheels)."
 }

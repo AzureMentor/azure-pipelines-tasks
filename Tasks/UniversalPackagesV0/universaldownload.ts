@@ -1,10 +1,10 @@
-import * as tl from "vsts-task-lib";
-import {IExecSyncResult, IExecOptions} from "vsts-task-lib/toolrunner";
-
+import * as tl from "azure-pipelines-task-lib";
+import * as pkgLocationUtils from "packaging-common/locationUtilities"; 
+import {IExecSyncResult, IExecOptions} from "azure-pipelines-task-lib/toolrunner";
 import * as telemetry from "utility-common/telemetry";
-import * as artifactToolRunner from "./Common/ArtifactToolRunner";
-import * as artifactToolUtilities from "./Common/ArtifactToolUtilities";
-import * as auth from "./Common/Authentication";
+import * as artifactToolRunner from "packaging-common/universal/ArtifactToolRunner";
+import * as artifactToolUtilities from "packaging-common/universal/ArtifactToolUtilities";
+import * as auth from "packaging-common/universal/Authentication";
 
 export async function run(artifactToolPath: string): Promise<void> {
     let buildIdentityDisplayName: string = null;
@@ -46,11 +46,11 @@ export async function run(artifactToolPath: string): Promise<void> {
 
             // Getting package name from package Id
             const packageId = tl.getInput("packageListDownload");
-            const accessToken = auth.getSystemAccessToken();
+            const accessToken = pkgLocationUtils.getSystemAccessToken();
 
             internalAuthInfo = new auth.InternalAuthInfo([], accessToken);
 
-            const feedUri = await artifactToolUtilities.getFeedUriFromBaseServiceUri(serviceUri, accessToken);
+            const feedUri = await pkgLocationUtils.getFeedUriFromBaseServiceUri(serviceUri, accessToken);
             packageName = await artifactToolUtilities.getPackageNameFromId(feedUri, accessToken, feedId, packageId);
 
             version = tl.getInput("versionListDownload");
@@ -113,7 +113,6 @@ function downloadPackageUsingArtifactTool(downloadDir: string, options: artifact
         "--path", downloadDir,
         "--patvar", "UNIVERSAL_DOWNLOAD_PAT",
         "--verbosity", tl.getInput("verbosity"));
-
     console.log(tl.loc("Info_Downloading", options.packageName, options.packageVersion, options.feedId));
     const execResult: IExecSyncResult = artifactToolRunner.runArtifactTool(options.artifactToolPath, command, execOptions);
     if (execResult.code === 0) {

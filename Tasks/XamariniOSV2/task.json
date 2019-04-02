@@ -3,6 +3,7 @@
     "name": "XamariniOS",
     "friendlyName": "Xamarin.iOS",
     "description": "Build an iOS app with Xamarin on macOS.",
+    "helpUrl": "https://go.microsoft.com/fwlink/?LinkID=613729",
     "helpMarkDown": "[More Information](https://go.microsoft.com/fwlink/?LinkID=613729)",
     "category": "Build",
     "visibility": [
@@ -11,8 +12,8 @@
     "author": "Microsoft Corporation",
     "version": {
         "Major": 2,
-        "Minor": 137,
-        "Patch": 1
+        "Minor": 151,
+        "Patch": 0
     },
     "releaseNotes": "iOS signing set up has been removed from the task. Use `Secure Files` with supporting tasks `Install Apple Certificate` and `Install Apple Provisioning Profile` to setup signing. Updated options to work better with `Visual Studio for Mac`.",
     "demands": [
@@ -33,7 +34,9 @@
     "inputs": [
         {
             "name": "solution",
-            "aliases": [ "solutionFile" ],
+            "aliases": [
+                "solutionFile"
+            ],
             "type": "filePath",
             "label": "Solution",
             "defaultValue": "**/*.sln",
@@ -66,7 +69,9 @@
         },
         {
             "name": "forSimulator",
-            "aliases": [ "buildForSimulator" ],
+            "aliases": [
+                "buildForSimulator"
+            ],
             "type": "boolean",
             "label": "Build for iOS Simulator",
             "defaultValue": "false",
@@ -92,7 +97,9 @@
         },
         {
             "name": "cwd",
-            "aliases": [ "workingDirectory" ],
+            "aliases": [
+                "workingDirectory"
+            ],
             "type": "filePath",
             "label": "Working directory",
             "defaultValue": "",
@@ -102,7 +109,10 @@
         },
         {
             "name": "buildToolLocation",
-            "aliases": [ "mdtoolFile", "mdtoolLocation" ],
+            "aliases": [
+                "mdtoolFile",
+                "mdtoolLocation"
+            ],
             "type": "string",
             "label": "Build tool path",
             "defaultValue": "",
@@ -110,10 +120,11 @@
             "helpMarkDown": "Optionally supply the full path to MSBuild (the Visual Studio for Mac build tool). When empty, the default MSBuild path is used.",
             "groupName": "advanced"
         },
-
         {
             "name": "iosSigningIdentity",
-            "aliases": [ "signingIdentity" ],
+            "aliases": [
+                "signingIdentity"
+            ],
             "type": "string",
             "label": "Signing identity",
             "required": false,
@@ -122,7 +133,9 @@
         },
         {
             "name": "provProfileUuid",
-            "aliases": [ "signingProvisioningProfileID" ],
+            "aliases": [
+                "signingProvisioningProfileID"
+            ],
             "type": "string",
             "label": "Provisioning profile UUID",
             "required": false,
@@ -142,7 +155,7 @@
         "ProvProfileUUIDNotFound": "Failed to find provisioning profile UUID for provisioning profile: %s",
         "XamariniOSSucceeded": "Xamarin.iOS task execution completed with no errors.",
         "XamariniOSFailed": "Xamarin.iOS task failed with error %s. For guidance on setting up the build pipeline, see https://go.microsoft.com/fwlink/?LinkId=760847.",
-        "MSB_Build0" : "Build {0}",
+        "MSB_Build0": "Build {0}",
         "MSB_DetectedNuGetExtensionsLoaderPath0": "Detected NuGet extensions loader path. Environment variable NUGET_EXTENSIONS_PATH is set to '{0}'.",
         "MSB_SolutionNotFoundUsingSearchPattern0": "Solution not found using search pattern '{0}'.",
         "MSB_RestoreNuGetPackagesDeprecated": "The 'Restore NuGet Packages' option is deprecated. To restore NuGet packages in your build, add a NuGet Tool Installer task to your build pipeline.",

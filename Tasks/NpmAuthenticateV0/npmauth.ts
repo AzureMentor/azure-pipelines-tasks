@@ -1,13 +1,14 @@
 import * as path from 'path';
-import * as tl from 'vsts-task-lib/task';
+import * as tl from 'azure-pipelines-task-lib/task';
 import * as URL from 'url';
 import * as fs from 'fs';
 import * as constants from './constants';
-import * as npmregistry from 'npm-common/npmregistry';
-import * as util from 'npm-common/util';
+import * as npmregistry from 'packaging-common/npm/npmregistry';
+import * as util from 'packaging-common/util';
+import * as npmutil from 'packaging-common/npm/npmutil';
 import * as os from 'os';
-import * as npmrcparser from 'npm-common/npmrcparser';
-import * as pkgLocationUtils from 'utility-common/packaging/locationUtilities';
+import * as npmrcparser from 'packaging-common/npm/npmrcparser';
+import * as pkgLocationUtils from 'packaging-common/locationUtilities';
 
 async function main(): Promise<void> {
     tl.setResourcePath(path.join(__dirname, 'task.json'));
@@ -28,7 +29,7 @@ async function main(): Promise<void> {
          saveNpmrcPath = tl.getVariable("SAVE_NPMRC_PATH");
     }
     else {
-        let tempPath = tl.getVariable('Agent.BuildDirectory') || tl.getVariable('Agent.ReleaseDirectory') || process.cwd();
+        let tempPath = tl.getVariable('Agent.BuildDirectory') || tl.getVariable('Agent.TempDirectory');
         tempPath = path.join(tempPath, 'npmAuthenticate');
         tl.mkdirP(tempPath);
         saveNpmrcPath = fs.mkdtempSync(tempPath + path.sep); 
@@ -68,7 +69,7 @@ async function main(): Promise<void> {
 
     let packagingLocation: pkgLocationUtils.PackagingLocation;
     try {
-        packagingLocation = await pkgLocationUtils.getPackagingUris(pkgLocationUtils.ProtocolType.NuGet);
+        packagingLocation = await pkgLocationUtils.getPackagingUris(pkgLocationUtils.ProtocolType.Npm);
     } catch (error) {
         tl.debug('Unable to get packaging URIs, using default collection URI');
         tl.debug(JSON.stringify(error));
@@ -78,10 +79,10 @@ async function main(): Promise<void> {
             DefaultPackagingUri: collectionUrl
         };
     }
-    let LocalNpmRegistries = await util.getLocalNpmRegistries(workingDirectory, packagingLocation.PackagingUris);
+    let LocalNpmRegistries = await npmutil.getLocalNpmRegistries(workingDirectory, packagingLocation.PackagingUris);
     
     let npmrcFile = fs.readFileSync(npmrc, 'utf8').split(os.EOL);
-    for (let RegistryURLString of npmrcparser.GetRegistries(npmrc)) {
+    for (let RegistryURLString of npmrcparser.GetRegistries(npmrc, /* saveNormalizedRegistries */ true)) {
         let registryURL = URL.parse(RegistryURLString);
         let registry: npmregistry.NpmRegistry;
         if (endpointRegistries && endpointRegistries.length > 0) {
@@ -109,7 +110,7 @@ async function main(): Promise<void> {
         }
         if (registry) {
             tl.debug(tl.loc('AddingAuthRegistry', registry.url));
-            util.appendToNpmrc(npmrc, os.EOL + registry.auth + os.EOL);
+            npmutil.appendToNpmrc(npmrc, os.EOL + registry.auth + os.EOL);
             npmrcFile.push(os.EOL + registry.auth + os.EOL);
         }
         else {
@@ -118,9 +119,10 @@ async function main(): Promise<void> {
     }
 }
 
-
 main().catch(error => {
-    tl.rmRF(util.getTempPath());
+    if(tl.getVariable("NPM_AUTHENTICATE_TEMP_DIRECTORY")) {
+        tl.rmRF(tl.getVariable("NPM_AUTHENTICATE_TEMP_DIRECTORY"));
+    } 
     tl.setResult(tl.TaskResult.Failed, error);
 });
 function clearFileOfReferences(npmrc: string, file: string[], url: URL.Url) {

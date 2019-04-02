@@ -23,7 +23,7 @@
   "loc.input.label.azureResourceGroup": "Grupo de recursos",
   "loc.input.help.azureResourceGroup": "Grupo de recursos de Azure que contiene la cuenta de almacenamiento seleccionada.",
   "loc.input.label.baseImageSource": "Origen de imagen base",
-  "loc.input.help.baseImageSource": "Seleccione el origen de la imagen base. Puede elegirlo en la galería de imágenes de sistema operativo o proporcionar una dirección URL de la imagen personalizada.",
+  "loc.input.help.baseImageSource": "Seleccione el origen de la imagen base. Puede elegirlo en la galería de imágenes del sistema operativo o proporcionar la dirección URL de la imagen personalizada.",
   "loc.input.label.baseImage": "Imagen base",
   "loc.input.help.baseImage": "Elija una imagen en la lista de imágenes de sistema operativo, que se usará para instalar los requisitos previos y las aplicaciones antes de capturar la imagen de la máquina.",
   "loc.input.label.customImageUrl": "URL de imagen base",
@@ -77,7 +77,10 @@
   "loc.messages.ParsingAdditionalBuilderParameters": "Analizando parámetros JSON adicionales del compilador.",
   "loc.messages.ParsingTemplateFileContentFailed": "No se puede analizar el contenido de JSON del archivo de plantilla %s. Error: %s.",
   "loc.messages.ParsingCustomTemplateParameters": "Analizando parámetros JSON de la plantilla personalizada.",
-  "loc.messages.FetchingSPNDetailsRemotely": "Recuperando los detalles de SPN para el identificador de aplicación %s del punto de conexión de Graph de Azure AD...",
+  "loc.messages.FetchingSPNDetailsRemotely": "Capturando detalles de SPN para el identificador de aplicación %s desde la conexión del servicio de Azure AD Graph...",
   "loc.messages.FetchedSPNDetailsRemotely": "Los detalles de SPN se han recuperado correctamente. Id. de objeto: %s",
-  "loc.messages.FailedToFetchSPNDetailsRemotely": "No se pueden recuperar los detalles de SPN del punto de conexión de Graph. Error: %s."
+  "loc.messages.FailedToFetchSPNDetailsRemotely": "No se pueden capturar los detalles de SPN de la conexión de servicio de Graph. Error: %s.",
+  "loc.messages.GetArtifactItemsNotSupported": "No se admite la obtención de elementos de artefacto. La ruta de acceso del código no es válida.",
+  "loc.messages.CouldNotFetchAccessTokenforMSIDueToMSINotConfiguredProperlyStatusCode": "No se pudo capturar el token de acceso para la entidad de servicio administrada. Configure Managed Service Identity (MSI) para la máquina virtual \"https://aka.ms/azure-msi-docs\". Código de estado: %s. Mensaje de estado: %s",
+  "loc.messages.CouldNotFetchAccessTokenforMSIStatusCode": "No se pudo capturar el token de acceso para la entidad de servicio administrada. Código de estado: %s. Mensaje de estado: %s"
 }

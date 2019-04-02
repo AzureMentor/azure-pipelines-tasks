@@ -1,6 +1,6 @@
 import * as stream from 'stream';
 import * as os from 'os';
-import * as tl from 'vsts-task-lib/task';
+import * as tl from 'azure-pipelines-task-lib/task';
 
 export class StringErrorWritable extends stream.Writable {
     private value: string = '';
@@ -30,4 +30,4 @@ export class StringErrorWritable extends stream.Writable {
     toString(): string {
         return this.value;
     }
-};
+}

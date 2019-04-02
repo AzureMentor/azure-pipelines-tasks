@@ -2,7 +2,8 @@
     "id": "049918CB-1488-48EB-85E8-C318ECCAAA74",
     "name": "XamarinTestCloud",
     "friendlyName": "Xamarin Test Cloud",
-    "description": "[Depreciated] Testing mobile apps with Xamarin Test Cloud using Xamarin.UITest - recommended task is now AppCenterTest",
+    "description": "[Deprecated] Testing mobile apps with Xamarin Test Cloud using Xamarin.UITest - recommended task is now AppCenterTest",
+    "helpUrl": "https://go.microsoft.com/fwlink/?LinkID=613744",
     "helpMarkDown": "[More Information](https://go.microsoft.com/fwlink/?LinkID=613744)",
     "category": "Test",
     "visibility": [
@@ -13,7 +14,7 @@
     "version": {
         "Major": 1,
         "Minor": 141,
-        "Patch": 0
+        "Patch": 2
     },
     "demands": [],
     "minimumAgentVersion": "1.83.0",
@@ -28,7 +29,9 @@
     "inputs": [
         {
             "name": "app",
-            "aliases": [ "appFile" ],
+            "aliases": [
+                "appFile"
+            ],
             "type": "filePath",
             "label": "App file",
             "defaultValue": "",
@@ -37,7 +40,9 @@
         },
         {
             "name": "dsym",
-            "aliases": [ "dsymFile" ],
+            "aliases": [
+                "dsymFile"
+            ],
             "type": "string",
             "label": "dSYM file (iOS only)",
             "required": false,
@@ -54,7 +59,9 @@
         },
         {
             "name": "user",
-            "aliases": [ "email" ],
+            "aliases": [
+                "email"
+            ],
             "type": "string",
             "label": "User email",
             "defaultValue": "",
@@ -79,7 +86,9 @@
         },
         {
             "name": "testDir",
-            "aliases": [ "testAssemblyDirectory" ],
+            "aliases": [
+                "testAssemblyDirectory"
+            ],
             "type": "filePath",
             "label": "Test assembly directory",
             "defaultValue": "",
@@ -88,7 +97,9 @@
         },
         {
             "name": "parallelization",
-            "aliases": [ "parallelizationOption" ],
+            "aliases": [
+                "parallelizationOption"
+            ],
             "type": "pickList",
             "label": "Parallelization",
             "required": true,
@@ -102,7 +113,9 @@
         },
         {
             "name": "locale",
-            "aliases": [ "localeOption" ],
+            "aliases": [
+                "localeOption"
+            ],
             "type": "pickList",
             "label": "System language",
             "defaultValue": "en_US",
@@ -135,7 +148,9 @@
         },
         {
             "name": "testCloudLocation",
-            "aliases": [ "testCloudFile" ],
+            "aliases": [
+                "testCloudFile"
+            ],
             "type": "filePath",
             "label": "test-cloud.exe location",
             "groupName": "advanced",

@@ -11,6 +11,7 @@ import { KUDU_DEPLOYMENT_CONSTANTS } from './constants';
 export class KuduServiceManagementClient {
     private _scmUri;
     private _accesssToken: string;
+    private _cookie: string[] = undefined;
 
     constructor(scmUri: string, accessToken: string) {
         this._accesssToken = accessToken;
@@ -20,13 +21,25 @@ export class KuduServiceManagementClient {
     public async beginRequest(request: webClient.WebRequest, reqOptions?: webClient.WebRequestOptions): Promise<webClient.WebResponse> {
         request.headers = request.headers || {};
         request.headers["Authorization"] = "Basic " + this._accesssToken;
-        request.headers['Content-Type'] = 'application/json; charset=utf-8';
+        if(!request.headers['Content-Type']) {
+            request.headers['Content-Type'] = 'application/json; charset=utf-8';
+        }
         
+        if(!!this._cookie) {
+            tl.debug(`setting affinity cookie ${JSON.stringify(this._cookie)}`);
+            request.headers['Cookie'] = this._cookie;
+        }
+
         let retryCount = reqOptions && util.isNumber(reqOptions.retryCount) ? reqOptions.retryCount : 5;
 
         while(retryCount >= 0) {
             try {
                 let httpResponse = await webClient.sendRequest(request, reqOptions);
+                if(httpResponse.headers['set-cookie'] && !this._cookie) {
+                    this._cookie = httpResponse.headers['set-cookie'];
+                    tl.debug(`loaded affinity cookie ${JSON.stringify(this._cookie)}`);
+                }
+
                 return httpResponse;
             }
             catch(exception) {
@@ -37,8 +50,8 @@ export class KuduServiceManagementClient {
                         tl.warning(tl.loc('ASE_SSLIssueRecommendation'));
                 }
 
-                if(retryCount > 0 && exceptionString.indexOf('Request timeout') != -1 && reqOptions && reqOptions.retryRequestTimedout) {
-                    tl.debug('encountered request timedou issue in Kudu. Retrying again');
+                if(retryCount > 0 && exceptionString.indexOf('Request timeout') != -1 && (!reqOptions || reqOptions.retryRequestTimedout)) {
+                    tl.debug('encountered request timedout issue in Kudu. Retrying again');
                     retryCount -= 1;
                     continue;
                 }
@@ -79,7 +92,7 @@ export class Kudu {
         httpRequest.uri = this._client.getRequestUri(`/api/deployments/${requestBody.id}`);
 
         try {
-            let webRequestOptions = {retriableErrorCodes: [], retriableStatusCodes: [], retryCount: 1, retryIntervalInSeconds: 5};
+            let webRequestOptions: webClient.WebRequestOptions = {retriableErrorCodes: [], retriableStatusCodes: [], retryCount: 1, retryIntervalInSeconds: 5, retryRequestTimedout: true};
             var response = await this._client.beginRequest(httpRequest, webRequestOptions);
             tl.debug(`updateDeployment. Data: ${JSON.stringify(response)}`);
             if(response.statusCode == 200) {
@@ -233,13 +246,15 @@ export class Kudu {
         var httpRequest = new webClient.WebRequest();
         httpRequest.method = 'DELETE';
         httpRequest.uri = this._client.getRequestUri(`/api/processes/${processID}`);
+        var reqOptions: webClient.WebRequestOptions = {
+            retriableErrorCodes: ["ETIMEDOUT"],
+            retriableStatusCodes: [503],
+            retryCount: 1,
+            retryIntervalInSeconds: 5,
+            retryRequestTimedout: true
+        };
         try {
-            var response = await this._client.beginRequest(httpRequest, {
-                retriableErrorCodes: ["ETIMEDOUT"],
-                retriableStatusCodes: [503],
-                retryCount: 1,
-                retryIntervalInSeconds: 5
-            });
+            var response = await this._client.beginRequest(httpRequest, reqOptions);
             tl.debug(`killProcess. Data: ${JSON.stringify(response)}`);
             if(response.statusCode == 502) {
                 tl.debug(`Killed Process ${processID}`);
@@ -386,7 +401,6 @@ export class Kudu {
         httpRequest.method = 'POST';
         httpRequest.uri = this._client.getRequestUri(`/api/command`);
         httpRequest.headers = {
-            'Content-Type': 'multipart/form-data',
             'If-Match': '*'
         };
         httpRequest.body = JSON.stringify({
@@ -443,6 +457,9 @@ export class Kudu {
         httpRequest.method = 'POST';
         httpRequest.uri = this._client.getRequestUri(`/api/zipdeploy`, queryParameters);
         httpRequest.body = fs.createReadStream(webPackage);
+        httpRequest.headers = {
+            'Content-Type': 'application/octet-stream'
+        };
 
         try {
             let response = await this._client.beginRequest(httpRequest);
@@ -476,6 +493,9 @@ export class Kudu {
         httpRequest.method = 'POST';
         httpRequest.uri = this._client.getRequestUri(`/api/wardeploy`, queryParameters);
         httpRequest.body = fs.createReadStream(webPackage);
+        httpRequest.headers = {
+            'Content-Type': 'application/octet-stream'
+        };
 
         try {
             let response = await this._client.beginRequest(httpRequest);
@@ -591,16 +611,17 @@ export class Kudu {
         }
     }
 
-    private async _getDeploymentDetailsFromPollURL(pollURL: string):Promise<any> {
+    private async _getDeploymentDetailsFromPollURL(pollURL: string): Promise<any> {
         let httpRequest = new webClient.WebRequest();
         httpRequest.method = 'GET';
         httpRequest.uri = pollURL;
+        httpRequest.headers = {};
 
         while(true) {
             let response = await this._client.beginRequest(httpRequest);
             if(response.statusCode == 200 || response.statusCode == 202) {
                 var result = response.body;
-                tl.debug(`POLL URL RESULT: ${JSON.stringify(result)}`);
+                tl.debug(`POLL URL RESULT: ${JSON.stringify(response)}`);
                 if(result.status == KUDU_DEPLOYMENT_CONSTANTS.SUCCESS || result.status == KUDU_DEPLOYMENT_CONSTANTS.FAILED) {
                     return result;
                 }

@@ -1,0 +1,11 @@
+{
+  "loc.friendlyName": "Evaluación de seguridad y cumplimiento",
+  "loc.description": "Evaluación de seguridad y cumplimiento con las directivas de Azure en recursos que pertenecen al grupo de recursos y la suscripción de Azure",
+  "loc.instanceNameFormat": "Evaluación del cumplimiento de Azure Policy para $(ResourceGroupName)",
+  "loc.input.label.ConnectedServiceName": "Suscripción a Azure",
+  "loc.input.help.ConnectedServiceName": "Seleccione la suscripción de Azure Resource Manager para aplicar las directivas.",
+  "loc.input.label.ResourceGroupName": "Grupo de recursos",
+  "loc.input.help.ResourceGroupName": "Proporcione el nombre de un grupo de recursos.",
+  "loc.input.label.Resources": "Nombre de recurso",
+  "loc.input.help.Resources": "Seleccione el nombre de los recursos de Azure para los que desea comprobar la compatibilidad de la directiva."
+}

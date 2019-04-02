@@ -1,11 +1,10 @@
-import * as tl from 'vsts-task-lib/task';
+import * as tl from 'azure-pipelines-task-lib/task';
 import * as path from 'path';
 import * as Q from 'q';
 import * as models from './models';
 import * as utils from './helpers';
 import * as parameterParser from './parameterparser'
 import * as version from './vstestversion';
-import * as os from 'os';
 import * as fs from 'fs';
 
 const xml2js = require('./node_modules/xml2js');

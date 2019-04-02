@@ -4,7 +4,6 @@ import webClient = require('azure-arm-rest/webClient');
 var parseString = require('xml2js').parseString;
 import Q = require('q');
 import { Kudu } from 'azure-arm-rest/azure-arm-app-service-kudu';
-import { AzureAppServiceConfigurationDetails } from 'azure-arm-rest/azureModels';
 
 export class AzureAppServiceUtility {
     private _appService: AzureAppService;
@@ -85,7 +84,7 @@ export class AzureAppServiceUtility {
             var webRequest = new webClient.WebRequest();
             webRequest.method = 'GET';
             webRequest.uri = applicationUrl;
-            let webRequestOptions = {retriableErrorCodes: [], retriableStatusCodes: [], retryCount: 1, retryIntervalInSeconds: 5};
+            let webRequestOptions: webClient.WebRequestOptions = {retriableErrorCodes: [], retriableStatusCodes: [], retryCount: 1, retryIntervalInSeconds: 5, retryRequestTimedout: true};
             var response = await webClient.sendRequest(webRequest, webRequestOptions);
             tl.debug(`App Service status Code: '${response.statusCode}'. Status Message: '${response.statusMessage}'`);
         }
@@ -120,7 +119,7 @@ export class AzureAppServiceUtility {
 
         tl.debug(`Virtual Application Map: Physical path: '${physicalToVirtualPathMap.physicalPath}'. Virtual path: '${physicalToVirtualPathMap.virtualPath}'.`);
         return physicalToVirtualPathMap.physicalPath;
-    }
+    }   
 
     public async updateConfigurationSettings(properties: any) : Promise<void> {
         for(var property in properties) {
@@ -134,7 +133,7 @@ export class AzureAppServiceUtility {
         console.log(tl.loc('UpdatedAppServiceConfigurationSettings'));
     }
 
-    public async updateAndMonitorAppSettings(addProperties: any, deleteProperties?: any): Promise<void> {
+    public async updateAndMonitorAppSettings(addProperties: any, deleteProperties?: any): Promise<boolean> {
         for(var property in addProperties) {
             if(!!addProperties[property] && addProperties[property].value !== undefined) {
                 addProperties[property] = addProperties[property].value;
@@ -146,7 +145,7 @@ export class AzureAppServiceUtility {
 
         if(!isNewValueUpdated) {
             console.log(tl.loc('UpdatedAppServiceApplicationSettings'));
-            return;
+            return isNewValueUpdated;
         }
 
         var kuduService = await this.getKuduService();
@@ -162,11 +161,18 @@ export class AzureAppServiceUtility {
                     break;
                 }
             }
+            for(var property in deleteProperties) {
+                if(kuduServiceAppSettings[property]) {
+                    tl.debug('Deleted properties are not reflected in Kudu service :(');
+                    propertiesChanged = false;
+                    break;
+                }
+            }
 
             if(propertiesChanged) {
                 tl.debug('New properties are updated in Kudu service.');
                 console.log(tl.loc('UpdatedAppServiceApplicationSettings'));
-                return;
+                return isNewValueUpdated;
             }
 
             noOftimesToIterate -= 1;
@@ -174,6 +180,7 @@ export class AzureAppServiceUtility {
         }
 
         tl.debug('Timing out from app settings check');
+        return isNewValueUpdated;
     }
 
     public async enableRenameLockedFiles(): Promise<void> {
@@ -200,6 +207,7 @@ export class AzureAppServiceUtility {
         startupCommand = (!!startupCommand) ? startupCommand  : "";
         var linuxFxVersion: string = configDetails.properties.linuxFxVersion;
         var appCommandLine: string = configDetails.properties.appCommandLine;
+        runtimeStack = (!!runtimeStack) ? runtimeStack : linuxFxVersion;
 
         if (appCommandLine != startupCommand || runtimeStack != linuxFxVersion) {
             await this.updateConfigurationSettings({linuxFxVersion: runtimeStack, appCommandLine: startupCommand});
@@ -234,16 +242,28 @@ export class AzureAppServiceUtility {
     private _getNewMetadata(): any {
         var collectionUri = tl.getVariable("system.teamfoundationCollectionUri");
         var projectId = tl.getVariable("system.teamprojectId");
-        var buildDefintionId = tl.getVariable("build.definitionId")
         var releaseDefinitionId = tl.getVariable("release.definitionId");
+
+        // Log metadata properties based on whether task is running in build OR release.
     
         let newProperties = {
-            VSTSRM_BuildDefinitionId: buildDefintionId,
-            VSTSRM_ReleaseDefinitionId: releaseDefinitionId,
             VSTSRM_ProjectId: projectId,
-            VSTSRM_AccountId: tl.getVariable("system.collectionId"),
-            VSTSRM_BuildDefinitionWebAccessUrl: collectionUri + projectId + "/_build?_a=simple-process&definitionId=" + buildDefintionId,
-            VSTSRM_ConfiguredCDEndPoint: collectionUri + projectId + "/_apps/hub/ms.vss-releaseManagement-web.hub-explorer?definitionId=" + releaseDefinitionId
+            VSTSRM_AccountId: tl.getVariable("system.collectionId")
+        }
+
+        if(!!releaseDefinitionId) {
+            // Task is running in Release
+            let buildDefintionId = tl.getVariable("build.definitionId");
+            newProperties["VSTSRM_BuildDefinitionId"] = buildDefintionId;
+            newProperties["VSTSRM_ReleaseDefinitionId"] = releaseDefinitionId;
+            newProperties["VSTSRM_BuildDefinitionWebAccessUrl"] = collectionUri + projectId + "/_build?_a=simple-process&definitionId=" + buildDefintionId;
+            newProperties["VSTSRM_ConfiguredCDEndPoint"] = collectionUri + projectId + "/_apps/hub/ms.vss-releaseManagement-web.hub-explorer?definitionId=" + releaseDefinitionId;
+        }
+        else {
+            // Task is running in Build
+            let buildDefintionId = tl.getVariable("system.definitionId");
+            newProperties["VSTSRM_BuildDefinitionId"] = buildDefintionId;
+            newProperties["VSTSRM_ConfiguredCDEndPoint"] = collectionUri + projectId + "/_build?_a=simple-process&definitionId=" + buildDefintionId;
         }
 
         return newProperties;

@@ -27,7 +27,7 @@
   "loc.input.label.baseImage": "Basisimage",
   "loc.input.help.baseImage": "Treffen Sie Ihre Auswahl aus der zusammengestellten Liste von Betriebssystemimages. Dies wird verwendet, um erforderliche Komponenten und Anwendungen vor dem Erfassen des Computerimages zu installieren.",
   "loc.input.label.customImageUrl": "Basisimage-URL",
-  "loc.input.help.customImageUrl": "Geben Sie die URL des Basisimages an. Dies wird verwendet, um erforderliche Komponenten und Anwendungen vor dem Erfassen des Computerimages zu installieren.",
+  "loc.input.help.customImageUrl": "Geben Sie die URL für das Basisimage an. Dieses wird verwendet, um erforderliche Komponenten und Anwendungen vor dem Erfassen des Computerimages zu installieren.",
   "loc.input.label.customImageOSType": "Basisimage-Betriebssystem",
   "loc.input.label.packagePath": "Bereitstellungspaket",
   "loc.input.help.packagePath": "Geben Sie den Pfad für das Bereitstellungspaketverzeichnis an, das \"$(System.DefaultWorkingDirectory)\" entspricht. Unterstützt das Minimatch-Muster. Beispielpfad: \"FrontendWebApp/**/GalleryApp\"",
@@ -77,7 +77,10 @@
   "loc.messages.ParsingAdditionalBuilderParameters": "JSON mit zusätzlichen Generatorparametern wird analysiert.",
   "loc.messages.ParsingTemplateFileContentFailed": "Analysieren des JSON-Inhalts von der Vorlagendatei %s nicht möglich. Fehler: %s.",
   "loc.messages.ParsingCustomTemplateParameters": "JSON mit benutzerdefinierten Vorlagenparametern wird analysiert.",
-  "loc.messages.FetchingSPNDetailsRemotely": "SPN-Details werden für die App-ID %s vom Azure AD-Diagrammendpunkt abgerufen...",
+  "loc.messages.FetchingSPNDetailsRemotely": "SPN-Details für App-ID %s werden aus der Azure AD-Diagrammdienstverbindung abgerufen...",
   "loc.messages.FetchedSPNDetailsRemotely": "SPN-Details erfolgreich abgerufen. ObjectId: %s",
-  "loc.messages.FailedToFetchSPNDetailsRemotely": "SPN-Details konnten vom Diagrammendpunkt nicht abgerufen werden. Fehler: %s."
+  "loc.messages.FailedToFetchSPNDetailsRemotely": "Abrufen von SPN-Details aus der Diagrammdienstverbindung nicht möglich. Fehler: %s.",
+  "loc.messages.GetArtifactItemsNotSupported": "Das Abrufen von Artefaktelementen wird nicht unterstützt, ungültiger Codepfad.",
+  "loc.messages.CouldNotFetchAccessTokenforMSIDueToMSINotConfiguredProperlyStatusCode": "Ein Zugriffstoken für den verwalteten Dienstprinzipal konnte nicht abgerufen werden. Konfigurieren Sie die verwaltete Dienstidentität (MSI) für den virtuellen Computer (https://aka.ms/azure-msi-docs). Statuscode: %s, Statusmeldung: %s",
+  "loc.messages.CouldNotFetchAccessTokenforMSIStatusCode": "Ein Zugriffstoken für den verwalteten Dienstprinzipal konnte nicht abgerufen werden. Statuscode: %s, Statusmeldung: %s"
 }

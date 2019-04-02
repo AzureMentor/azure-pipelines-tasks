@@ -3,6 +3,7 @@
     "name": "AppCenterDistribute",
     "friendlyName": "App Center Distribute",
     "description": "Distribute app builds to testers and users via App Center",
+    "helpUrl": "https://aka.ms/appcentersupport/",
     "helpMarkDown": "For help with this task, visit the Visual Studio App Center [support site](https://aka.ms/appcentersupport/).",
     "category": "Deploy",
     "visibility": [
@@ -12,10 +13,10 @@
     "author": "Microsoft Corporation",
     "version": {
         "Major": 1,
-        "Minor": 139,
+        "Minor": 147,
         "Patch": 0
     },
-    "releaseNotes": "Add support for distribution to stores.",
+    "releaseNotes": "Fix bug where feature branches were being truncated.",
     "groups": [
         {
             "name": "symbols",
@@ -42,7 +43,9 @@
         },
         {
             "name": "app",
-            "aliases": [ "appFile" ],
+            "aliases": [
+                "appFile"
+            ],
             "type": "filePath",
             "label": "Binary file path",
             "defaultValue": "",
@@ -51,7 +54,9 @@
         },
         {
             "name": "symbolsType",
-            "aliases": [ "symbolsOption" ],
+            "aliases": [
+                "symbolsOption"
+            ],
             "type": "pickList",
             "label": "Symbols type",
             "required": false,
@@ -72,7 +77,9 @@
         },
         {
             "name": "pdbPath",
-            "aliases": [ "symbolsPdbFiles" ],
+            "aliases": [
+                "symbolsPdbFiles"
+            ],
             "type": "filePath",
             "label": "Symbols path (*.pdb)",
             "defaultValue": "**/*.pdb",
@@ -83,7 +90,9 @@
         },
         {
             "name": "dsymPath",
-            "aliases": [ "symbolsDsymFiles" ],
+            "aliases": [
+                "symbolsDsymFiles"
+            ],
             "type": "filePath",
             "label": "dSYM path",
             "groupName": "symbols",
@@ -93,7 +102,9 @@
         },
         {
             "name": "mappingTxtPath",
-            "aliases": [ "symbolsMappingTxtFile" ],
+            "aliases": [
+                "symbolsMappingTxtFile"
+            ],
             "type": "filePath",
             "label": "Mapping file",
             "groupName": "symbols",
@@ -103,7 +114,9 @@
         },
         {
             "name": "packParentFolder",
-            "aliases": [ "symbolsIncludeParentDirectory" ],
+            "aliases": [
+                "symbolsIncludeParentDirectory"
+            ],
             "type": "boolean",
             "label": "Include all items in parent folder",
             "groupName": "symbols",
@@ -112,7 +125,9 @@
         },
         {
             "name": "releaseNotesSelection",
-            "aliases": [ "releaseNotesOption" ],
+            "aliases": [
+                "releaseNotesOption"
+            ],
             "type": "radio",
             "label": "Create release notes",
             "required": true,
@@ -132,7 +147,7 @@
             "properties": {
                 "resizable": "true",
                 "rows": "10",
-                "maxLength": "5000"	
+                "maxLength": "5000"
             }
         },
         {
@@ -142,6 +157,13 @@
             "required": true,
             "helpMarkDown": "Select a UTF-8 encoded text file which contains the Release Notes for this version.",
             "visibleRule": "releaseNotesSelection = file"
+        },
+        {
+            "name": "isMandatory",
+            "type": "boolean",
+            "label": "Require users to update to this release",
+            "defaultValue": "false",
+            "required": false
         },
         {
             "name": "destinationId",

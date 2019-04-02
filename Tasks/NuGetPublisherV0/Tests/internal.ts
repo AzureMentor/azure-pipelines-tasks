@@ -1,5 +1,5 @@
-import ma = require('vsts-task-lib/mock-answer');
-import tmrm = require('vsts-task-lib/mock-run');
+import ma = require('azure-pipelines-task-lib/mock-answer');
+import tmrm = require('azure-pipelines-task-lib/mock-run');
 import path = require('path');
 import util = require('./NugetMockHelper');
 
@@ -19,7 +19,7 @@ let a: ma.TaskLibAnswers = <ma.TaskLibAnswers>{
     },
     "which": {},
     "exec": {
-        "c:\\agent\\home\\directory\\externals\\nuget\\nuget.exe push -NonInteractive c:\\agent\\home\\directory\\package.nupkg -Source testFeedUri -ApiKey VSTS -ConfigFile c:\\agent\\home\\directory\\tempNuGet_.config": {
+        "c:\\from\\tool\\installer\\nuget.exe push -NonInteractive c:\\agent\\home\\directory\\package.nupkg -Source testFeedUri -ApiKey VSTS -ConfigFile c:\\agent\\home\\directory\\tempNuGet_.config": {
             "code": 0,
             "stdout": "NuGet output here",
             "stderr": ""
@@ -43,6 +43,5 @@ nmh.registerNugetUtilityMock(["c:\\agent\\home\\directory\\package.nupkg"]);
 nmh.registerDefaultNugetVersionMock();
 nmh.registerNugetConfigMock();
 nmh.registerToolRunnerMock();
-nmh.registerNugetLocationHelpersMock();
 
 tmr.run();

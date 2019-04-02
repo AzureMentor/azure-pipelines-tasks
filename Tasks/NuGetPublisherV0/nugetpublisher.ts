@@ -1,14 +1,14 @@
 import * as path from "path";
 import * as Q  from "q";
-import * as tl from "vsts-task-lib/task";
+import * as tl from "azure-pipelines-task-lib/task";
 
-import * as auth from "nuget-task-common/Authentication";
-import INuGetCommandOptions from "nuget-task-common/INuGetCommandOptions";
-import locationHelpers = require("nuget-task-common/LocationHelpers");
-import {NuGetConfigHelper} from "nuget-task-common/NuGetConfigHelper";
-import * as ngToolRunner from "nuget-task-common/NuGetToolRunner";
-import * as nutil from "nuget-task-common/Utility";
-import * as pkgLocationUtils from "utility-common/packaging/locationUtilities";
+import * as auth from "packaging-common/nuget/Authentication";
+import INuGetCommandOptions from "packaging-common/nuget/INuGetCommandOptions";
+import {NuGetConfigHelper} from "packaging-common/nuget/NuGetConfigHelper";
+import * as ngToolGetter from "packaging-common/nuget/NuGetToolGetter";
+import * as ngToolRunner from "packaging-common/nuget/NuGetToolRunner";
+import * as nutil from "packaging-common/nuget/Utility";
+import * as pkgLocationUtils from "packaging-common/locationUtilities";
 
 class PublishOptions implements INuGetCommandOptions {
     constructor(
@@ -90,10 +90,31 @@ async function main(): Promise<void> {
             {
                 throw new Error(tl.loc("NoNuGetSpecified"))
             }
-            nuGetPath = nutil.getBundledNuGetLocation(nugetUxOption);
-        }
+            // Pull the pre-installed path for NuGet.
+            let nuGetPathSuffix: string;
+            let versionToUse: string;
+            if (nugetUxOption === "4.0.0.2283") {
+                nuGetPathSuffix = "NuGet/4.0.0/";
+                versionToUse = "4.0.0";
+            }
+            else if (nugetUxOption === "3.5.0.1829") {
+                nuGetPathSuffix = "NuGet/3.5.0/";
+                versionToUse = "3.5.0";
+            }
+            else if (nugetUxOption === "3.3.0") {
+                nuGetPathSuffix = "NuGet/3.3.0/";
+                versionToUse = "3.3.0";
+            }
+            else {
+                throw new Error(tl.loc("NGCommon_UnabletoDetectNuGetVersion"));
+            }
 
-        let serviceUri = tl.getEndpointUrl("SYSTEMVSSCONNECTION", false);
+            // save and reset the tool path env var, so this task doesn't act as a tool installer
+            const tempNuGetPath = tl.getVariable(ngToolGetter.NUGET_EXE_TOOL_PATH_ENV_VAR);
+            const cachedVersion = await ngToolGetter.cacheBundledNuGet(versionToUse, nuGetPathSuffix);
+            nuGetPath = await ngToolGetter.getNuGet(cachedVersion);
+            tl.setVariable(ngToolGetter.NUGET_EXE_TOOL_PATH_ENV_VAR, tempNuGetPath);
+        }
 
         //find nuget location to use
         let credProviderPath = nutil.locateCredentialProvider();
@@ -105,7 +126,7 @@ async function main(): Promise<void> {
         const useCredProvider = ngToolRunner.isCredentialProviderEnabled(quirks) && credProviderPath;
         const useCredConfig = ngToolRunner.isCredentialConfigEnabled(quirks) && !useCredProvider;
 
-        let accessToken = auth.getSystemAccessToken();
+        let accessToken = pkgLocationUtils.getSystemAccessToken();
         let urlPrefixes = packagingLocation.PackagingUris;
         tl.debug(`discovered URL prefixes: ${urlPrefixes}`);
 

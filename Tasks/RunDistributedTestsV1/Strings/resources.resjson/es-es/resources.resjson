@@ -1,7 +1,7 @@
 {
   "loc.friendlyName": "Ejecutar pruebas funcionales",
   "loc.helpMarkDown": "[Más información](https://go.microsoft.com/fwlink/?LinkId=624389)",
-  "loc.description": "En desuso: Esta tarea y la que la acompaña (Implementación de Visual Studio Test Agent) están en desuso. Use la tarea “Visual Studio Test” en su lugar. La tarea VSTest puede ejecutar tanto pruebas unitarias como funcionales. Ejecute pruebas en uno o más agentes con la configuración de la fase multiagente. Use la tarea “Visual Studio Test Platform” para ejecutar pruebas sin necesidad de tener Visual Studio en el agente. La tarea VSTest también aporta capacidades nuevas, como volver a ejecutar automáticamente las pruebas con errores.",
+  "loc.description": "En desuso: Esta tarea y la que la acompaña (Implementación de Visual Studio Test Agent) están en desuso. Use la tarea \"Visual Studio Test\" en su lugar. La tarea VSTest puede ejecutar tanto pruebas unitarias como funcionales. Ejecute pruebas en uno o más agentes con la configuración de trabajo multiagente. Use la tarea \"Visual Studio Test Platform\" para ejecutar pruebas sin necesidad de tener Visual Studio en el agente. La tarea VSTest también aporta funcionalidad nueva, como volver a ejecutar automáticamente las pruebas con errores.",
   "loc.instanceNameFormat": "Ejecutar pruebas $(sourcefilters) en $(testMachineGroup)",
   "loc.group.displayName.setupOptions": "Opciones de instalación",
   "loc.group.displayName.executionOptions": "Opciones de ejecución",

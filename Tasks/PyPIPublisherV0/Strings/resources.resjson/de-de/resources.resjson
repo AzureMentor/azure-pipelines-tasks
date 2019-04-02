@@ -1,12 +1,12 @@
 {
-  "loc.friendlyName": "PyPI Publisher",
-  "loc.helpMarkDown": "[More Information](https://aka.ms/pypipublisher)",
-  "loc.description": "Publish Python packages to PyPI",
-  "loc.instanceNameFormat": "PyPI Publisher",
-  "loc.input.label.serviceEndpoint": "PyPI connection",
-  "loc.input.help.serviceEndpoint": "Select the generic service endpoint where PyPI server details are present. \n\nNote: To configure a new generic service endpoint, under your Azure Pipelines project, go to Settings -> Services -> New Service Endpoint -> Generic. \n\nConnection Name – Use a friendly connection name of your choice. \nServer URL – PyPI package server (for example: https://upload.pypi.org/legacy/). \nUser Name – PyPI registered username. \nPassword – password for your PyPI account",
-  "loc.input.label.wd": "Python package path",
-  "loc.input.help.wd": "Python package directory to be published, where setup.py is present.",
-  "loc.input.label.wheel": "Upload wheel",
-  "loc.input.help.wheel": "If checked, then task will additionally build and publish universal wheel (platform independent) of this package. For more information regarding universal wheel [see here](https://packaging.python.org/tutorials/distributing-packages/#wheels)."
+  "loc.friendlyName": "PyPI-Herausgeber",
+  "loc.helpMarkDown": "[Weitere Informationen](https://go.microsoft.com/fwlink/?linkid=875289)",
+  "loc.description": "Hiermit wird ein sdist- oder wheel-Paket unter Verwendung von Twine erstellt und in einen PyPI-kompatiblen Index hochgeladen.",
+  "loc.instanceNameFormat": "Paketieren und in PyPI veröffentlichen",
+  "loc.input.label.serviceEndpoint": "PyPI-Dienstverbindung",
+  "loc.input.help.serviceEndpoint": "Eine generische Dienstverbindung für die Verbindungsherstellung mit dem Paketindex.",
+  "loc.input.label.wd": "Python-Paketverzeichnis",
+  "loc.input.help.wd": "Das Verzeichnis des Python-Pakets, das erstellt und veröffentlicht werden soll, in dem \"setup.py\" vorhanden ist.",
+  "loc.input.label.wheel": "Auch ein wheel-Paket veröffentlichen",
+  "loc.input.help.wheel": "Wählen Sie aus, ob zusätzlich zu einem sdist-Paket ein universelles wheel-Paket (plattformunabhängig) erstellt und veröffentlicht werden soll. [Weitere Informationen](https://packaging.python.org/tutorials/distributing-packages/#wheels)."
 }

@@ -3,6 +3,8 @@
     "name": "DecryptFile",
     "friendlyName": "Decrypt File (OpenSSL)",
     "description": "A thin utility task for file decryption using OpenSSL.",
+    "helpUrl": "",
+    "helpMarkDown": "",
     "category": "Utility",
     "visibility": [
         "Build",
@@ -16,7 +18,7 @@
     "version": {
         "Major": 1,
         "Minor": 142,
-        "Patch": 0
+        "Patch": 2
     },
     "groups": [
         {
@@ -58,7 +60,9 @@
         },
         {
             "name": "cwd",
-            "aliases": ["workingDirectory"],
+            "aliases": [
+                "workingDirectory"
+            ],
             "type": "filePath",
             "label": "Working directory",
             "defaultValue": "",

@@ -3,6 +3,7 @@
   "name": "UseRubyVersion",
   "friendlyName": "ms-resource:loc.friendlyName",
   "description": "ms-resource:loc.description",
+  "helpUrl": "https://go.microsoft.com/fwlink/?linkid=2005989",
   "helpMarkDown": "ms-resource:loc.helpMarkDown",
   "category": "Tool",
   "runsOn": [
@@ -12,8 +13,8 @@
   "author": "Microsoft Corporation",
   "version": {
     "Major": 0,
-    "Minor": 140,
-    "Patch": 0
+    "Minor": 142,
+    "Patch": 1
   },
   "demands": [],
   "minimumAgentVersion": "2.115.0",
@@ -51,6 +52,8 @@
   "messages": {
     "ListAvailableVersions": "ms-resource:loc.messages.ListAvailableVersions",
     "PlatformNotRecognized": "ms-resource:loc.messages.PlatformNotRecognized",
+    "ToolNotFoundMicrosoftHosted": "ms-resource:loc.messages.ToolNotFoundMicrosoftHosted",
+    "ToolNotFoundSelfHosted": "ms-resource:loc.messages.ToolNotFoundSelfHosted",
     "VersionNotFound": "ms-resource:loc.messages.VersionNotFound"
   }
 }

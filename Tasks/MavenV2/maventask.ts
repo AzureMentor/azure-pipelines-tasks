@@ -14,6 +14,7 @@ import {FindbugsTool} from 'codeanalysis-common/Common/FindbugsTool';
 import javacommons = require('java-common/java-common');
 import util = require('./mavenutil');
 
+const TESTRUN_SYSTEM = "VSTS - maven"; 
 var isWindows = os.type().match(/^Win/);
 
 // Set up localization resource file
@@ -88,6 +89,7 @@ if (isWindows &&
 }
 
 tl.debug('Maven executable: ' + mvnExec);
+tl.checkPath(mvnExec, 'maven path');
 
 // Set JAVA_HOME to the JDK version (default, 1.7, 1.8, etc.) or the path specified by the user
 var specifiedJavaHome: string = null;
@@ -336,7 +338,8 @@ function publishJUnitTestResults(testResultsFiles: string) {
     }
 
     var tp = new tl.TestPublisher("JUnit");
-    tp.publish(matchingJUnitResultFiles, true, "", "", "", true);
+    const testRunTitle = tl.getInput('testRunTitle');
+    tp.publish(matchingJUnitResultFiles, true, "", "", testRunTitle, true, TESTRUN_SYSTEM);
 }
 
 function execEnableCodeCoverage(): Q.Promise<string> {

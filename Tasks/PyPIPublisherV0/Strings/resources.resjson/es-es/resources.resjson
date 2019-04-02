@@ -1,12 +1,12 @@
 {
-  "loc.friendlyName": "PyPI Publisher",
-  "loc.helpMarkDown": "[More Information](https://aka.ms/pypipublisher)",
-  "loc.description": "Publish Python packages to PyPI",
-  "loc.instanceNameFormat": "PyPI Publisher",
-  "loc.input.label.serviceEndpoint": "PyPI connection",
-  "loc.input.help.serviceEndpoint": "Select the generic service endpoint where PyPI server details are present. \n\nNote: To configure a new generic service endpoint, under your Azure Pipelines project, go to Settings -> Services -> New Service Endpoint -> Generic. \n\nConnection Name – Use a friendly connection name of your choice. \nServer URL – PyPI package server (for example: https://upload.pypi.org/legacy/). \nUser Name – PyPI registered username. \nPassword – password for your PyPI account",
-  "loc.input.label.wd": "Python package path",
-  "loc.input.help.wd": "Python package directory to be published, where setup.py is present.",
-  "loc.input.label.wheel": "Upload wheel",
-  "loc.input.help.wheel": "If checked, then task will additionally build and publish universal wheel (platform independent) of this package. For more information regarding universal wheel [see here](https://packaging.python.org/tutorials/distributing-packages/#wheels)."
+  "loc.friendlyName": "Editor de PyPI",
+  "loc.helpMarkDown": "[Más información](https://go.microsoft.com/fwlink/?linkid=875289)",
+  "loc.description": "Crea y carga un paquete sdist o wheel en un índice compatible con PyPI mediante Twine.",
+  "loc.instanceNameFormat": "Empaquetar y publicar en PyPI",
+  "loc.input.label.serviceEndpoint": "Conexión de servicio de PyPI",
+  "loc.input.help.serviceEndpoint": "Una conexión de servicio genérica para conectarse al índice de paquete.",
+  "loc.input.label.wd": "Directorio del paquete de Python",
+  "loc.input.help.wd": "Directorio del paquete de Python que se va a crear y publicar, en el que se encuentra setup.py.",
+  "loc.input.label.wheel": "Publicar también un paquete wheel",
+  "loc.input.help.wheel": "Seleccione si se va a crear y publicar un paquete wheel universal (independiente de la plataforma), además de un paquete sdist. [Más información](https://packaging.python.org/tutorials/distributing-packages/#wheels)."
 }

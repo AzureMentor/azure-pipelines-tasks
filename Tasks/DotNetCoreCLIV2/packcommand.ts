@@ -1,11 +1,10 @@
-import * as ngToolRunner from "nuget-task-common/NuGetToolRunner2";
-import * as nuGetGetter from "nuget-task-common/NuGetToolGetter";
-import * as nutil from "nuget-task-common/Utility";
+import * as ngToolRunner from "packaging-common/nuget/NuGetToolRunner2";
+import * as nutil from "packaging-common/nuget/Utility";
 import * as path from "path";
-import * as tl from "vsts-task-lib/task";
-import * as utility from "nuget-task-common/PackUtilities";
+import * as tl from "azure-pipelines-task-lib/task";
+import * as utility from "packaging-common/PackUtilities";
 
-import { IExecOptions } from "vsts-task-lib/toolrunner";
+import { IExecOptions } from "azure-pipelines-task-lib/toolrunner";
 
 export async function run(): Promise<void> {
 

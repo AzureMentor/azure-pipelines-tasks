@@ -3,9 +3,9 @@
   "name": "GoTool",
   "friendlyName": "ms-resource:loc.friendlyName",
   "description": "ms-resource:loc.description",
+  "helpUrl": "https://go.microsoft.com/fwlink/?linkid=867581",
   "helpMarkDown": "ms-resource:loc.helpMarkDown",
   "category": "Tool",
-  "preview": "true",
   "runsOn": [
     "Agent",
     "DeploymentGroup"
@@ -14,7 +14,7 @@
   "version": {
     "Major": 0,
     "Minor": 2,
-    "Patch": 0
+    "Patch": 4
   },
   "satisfies": [
     "GO"

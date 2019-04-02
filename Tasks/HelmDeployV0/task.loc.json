@@ -3,6 +3,7 @@
   "name": "HelmDeploy",
   "friendlyName": "ms-resource:loc.friendlyName",
   "description": "ms-resource:loc.description",
+  "helpUrl": "https://go.microsoft.com/fwlink/?linkid=851275",
   "helpMarkDown": "ms-resource:loc.helpMarkDown",
   "category": "Deploy",
   "visibility": [
@@ -12,8 +13,8 @@
   "author": "Microsoft Corporation",
   "version": {
     "Major": 0,
-    "Minor": 138,
-    "Patch": 5
+    "Minor": 150,
+    "Patch": 2
   },
   "demands": [],
   "groups": [
@@ -50,7 +51,8 @@
       "required": true,
       "options": {
         "Azure Resource Manager": "Azure Resource Manager",
-        "Kubernetes Service Connection": "Kubernetes Service Connection"
+        "Kubernetes Service Connection": "Kubernetes Service Connection",
+        "None": "None"
       },
       "helpMarkDown": "ms-resource:loc.input.help.connectionType",
       "groupName": "cluster"
@@ -393,6 +395,7 @@
     }
   ],
   "instanceNameFormat": "ms-resource:loc.instanceNameFormat",
+  "showEnvironmentVariables": true,
   "prejobexecution": {
     "Node": {
       "target": "src//downloadsecurefiles.js"

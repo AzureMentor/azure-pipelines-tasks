@@ -1,7 +1,6 @@
 import * as path from 'path';
 
-import { TaskLibAnswerExecResult } from 'vsts-task-lib/mock-answer';
-import * as tmrm from 'vsts-task-lib/mock-run';
+import { TaskLibAnswerExecResult } from 'azure-pipelines-task-lib/mock-answer';
 
 import { NpmCommand, NpmTaskInput, RegistryLocation } from '../constants';
 import { NpmMockHelper } from './NpmMockHelper';
@@ -26,6 +25,5 @@ tmr.mockNpmCommand('publish', {
 } as TaskLibAnswerExecResult);
 tmr.answers.rmRF[path.join('workingDir', '.npmrc')] = { success: true };
 tmr.answers["stats"] = {"workingDir": {"isDirectory":true}};
-tmr.RegisterLocationServiceMocks();
 
 tmr.run();

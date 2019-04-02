@@ -4,8 +4,7 @@ import path = require('path');
 import fs = require('fs');
 import tl = require('vsts-task-lib/task');
 import tr = require('vsts-task-lib/toolrunner');
-import * as pkgLocationUtils from "utility-common/packaging/locationUtilities";
-import systemToken = require('utility-common/accesstoken');
+import * as pkgLocationUtils from "packaging-common-old/locationUtilities";
 
 import * as url from "url";
 import * as xml2js from 'xml2js';
@@ -165,7 +164,7 @@ export function mergeCredentialsIntoSettingsXml(settingsXmlFile:string, reposito
 }
 
 function getAuthenticationToken() {
-    return base64.encode(utf8.encode('VSTS:' + systemToken.getSystemAccessToken()));
+    return base64.encode(utf8.encode('VSTS:' + pkgLocationUtils.getSystemAccessToken()));
 }
 
 function insertRepoJsonIntoPomJson(pomJson:any, repoJson:any) {
@@ -301,7 +300,7 @@ export function getExecOptions(): tr.IExecOptions {
 }
 
 export function publishMavenInfo(mavenInfo: string) {
-    const stagingDir: string = path.join(os.tmpdir(), '.mavenInfo');
+    const stagingDir: string = path.join(tl.getVariable('Agent.TempDirectory'), '.mavenInfo');
     const randomString: string = uuidV4();
     const infoFilePath: string = path.join(stagingDir, 'MavenInfo-' + randomString + '.md');
     if (!tl.exist(stagingDir)) {

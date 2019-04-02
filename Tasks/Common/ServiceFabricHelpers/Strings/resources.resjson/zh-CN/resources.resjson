@@ -1,5 +1,6 @@
 {
   "loc.messages.AadAuthority": "AAD 颁发机构: {0}",
+  "loc.messages.CertNotPresentInLocalStoreWarningMsg": "The certificate with thumbprint {0} is not present in the local certificate store. This can potentially cause errors. If the release/build fails, please re-try it or ensure that multiple agents are not running builds/releases using the same service endpoint simultaneously on the same machine.",
   "loc.messages.ClientAppId": "客户端应用程序 ID: {0}",
   "loc.messages.ClusterAppId": "群集应用程序 ID: {0}",
   "loc.messages.ConnectedToCluster": "成功连接到群集。",
@@ -9,5 +10,9 @@
   "loc.messages.ImportedCertificate": "带有指纹“{0}”的导入的群集客户端证书。",
   "loc.messages.ServiceFabricSDKNotInstalled": "未在生成代理上安装 Service Fabric SDK。请转到 https://aka.ms/servicefabric 下载并安装它。",
   "loc.messages.UseWindowsSecurity": "已指定 Windows 安全性。连接时，将使用 -WindowsCredential 开关。",
-  "loc.messages.ServerCertificateNotFoundForTextEncrypt": "The cluster's server certificate with thumbprint '{0}' is required in order to encrypt text but the certificate could not be found on the agent machine in the 'CurrentUser\\My' certificate store location."
+  "loc.messages.ServerCertificateNotFoundForTextEncrypt": "需要指纹为“{0}”的群集服务器证书才可加密文本，但 \"CurrentUser\\My\" 证书存储位置中的代理计算机上找不到该证书。",
+  "loc.messages.RetryingClusterConnection": "正在重试连接到群集...",
+  "loc.messages.WarningOnRemoveCertificate": "尝试删除客户端证书时出错。错误消息: {0}",
+  "loc.messages.TelemetryWarning": "无法推送遥测数据。错误: {0}",
+  "loc.messages.SfSdkVersion": "Service Fabric SDK 版本: {0}。"
 }

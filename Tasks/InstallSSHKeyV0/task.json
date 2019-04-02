@@ -3,6 +3,7 @@
     "name": "InstallSSHKey",
     "friendlyName": "Install SSH Key",
     "description": "Install an SSH key prior to a build or release",
+    "helpUrl": "https://go.microsoft.com/fwlink/?linkid=875267",
     "helpMarkDown": "[More information](https://go.microsoft.com/fwlink/?linkid=875267)",
     "category": "Utility",
     "visibility": [
@@ -12,20 +13,22 @@
     "author": "Microsoft Corporation",
     "version": {
         "Major": 0,
-        "Minor": 141,
-        "Patch": 0
+        "Minor": 150,
+        "Patch": 1
     },
     "runsOn": [
         "Agent",
         "DeploymentGroup"
     ],
-    "demands": [
-    ],
+    "demands": [],
     "minimumAgentVersion": "2.117.0",
     "instanceNameFormat": "Install an SSH key",
     "inputs": [
         {
             "name": "hostName",
+            "aliases": [
+                "knownHostsEntry"
+            ],
             "type": "string",
             "label": "Known Hosts Entry",
             "defaultValue": "",
@@ -76,4 +79,3 @@
         "CannotResetKnownHosts": "Cannot reset the known_hosts file to its original values."
     }
 }
-    

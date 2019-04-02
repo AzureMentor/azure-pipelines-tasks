@@ -3,6 +3,7 @@
     "name": "ChefKnife",
     "friendlyName": "Chef Knife",
     "description": "Run Scripts with knife commands on your chef workstation",
+    "helpUrl": "https://aka.ms/chef-knife-readme",
     "helpMarkDown": "[More Information](https://aka.ms/chef-knife-readme)",
     "category": "Deploy",
     "visibility": [
@@ -16,7 +17,7 @@
     "version": {
         "Major": 1,
         "Minor": 0,
-        "Patch": 15
+        "Patch": 17
     },
     "deprecated": true,
     "demands": [

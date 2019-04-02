@@ -1,13 +1,19 @@
 import tmrm = require('vsts-task-lib/mock-run');
-import VersionInfoVersion from 'nuget-task-common/pe-parser/VersionInfoVersion'
-import {VersionInfo, VersionStrings} from 'nuget-task-common/pe-parser/VersionResource'
+import VersionInfoVersion from 'packaging-common/pe-parser/VersionInfoVersion'
+import {VersionInfo} from 'packaging-common/pe-parser/VersionResource'
+
+import * as pkgMock from 'packaging-common/Tests/MockHelper';
+import * as nPkgMock from 'packaging-common/Tests/NuGetMockHelper';
 
 export class NugetMockHelper {
     private defaultNugetVersion = '3.3.0';
     private defaultNugetVersionInfo = [3,3,0,212];
     
-    constructor(
-        private tmr: tmrm.TaskMockRunner) { 
+    constructor(private tmr: tmrm.TaskMockRunner, unix?: boolean) {
+        if (unix == null) {
+            unix = false
+        }
+
         process.env['AGENT_HOMEDIRECTORY'] = "c:\\agent\\home\\directory";
         process.env['BUILD_SOURCESDIRECTORY'] = "c:\\agent\\home\\directory\\sources",
         process.env['ENDPOINT_AUTH_SYSTEMVSSCONNECTION'] = "{\"parameters\":{\"AccessToken\":\"token\"},\"scheme\":\"OAuth\"}";
@@ -15,7 +21,13 @@ export class NugetMockHelper {
         process.env['SYSTEM_DEFAULTWORKINGDIRECTORY'] = "c:\\agent\\home\\directory";
         process.env['SYSTEM_TEAMFOUNDATIONCOLLECTIONURI'] = "https://example.visualstudio.com/defaultcollection";
 
-        this.registerNugetLocationHelpersMock();
+        pkgMock.registerLocationHelpersMock(tmr);
+
+        if (unix) {
+            nPkgMock.registerNugetToolGetterMockUnix(tmr);
+        } else {
+            nPkgMock.registerNugetToolGetterMock(tmr);
+        }
     }
     
     public setNugetVersionInputDefault() {
@@ -27,7 +39,7 @@ export class NugetMockHelper {
     }
     
     public registerNugetVersionMock(productVersion: string, versionInfoVersion: number[]) {
-        this.tmr.registerMock('./pe-parser', {
+        this.tmr.registerMock('../pe-parser', {
             getFileVersionInfoAsync: function(nuGetExePath) {
                 let result: VersionInfo = { strings: {} };
                 result.fileVersion = new VersionInfoVersion(versionInfoVersion[0], versionInfoVersion[1], versionInfoVersion[2], versionInfoVersion[3]);
@@ -37,36 +49,9 @@ export class NugetMockHelper {
         })
     }
     
-    public registerNugetUtilityMock(projectFile: string[]) {
-        this.tmr.registerMock('nuget-task-common/Utility', {
-            resolveFilterSpec: function(filterSpec, basePath?, allowEmptyMatch?) {
-                return projectFile;
-            },
-            getBundledNuGetLocation: function(version) {
-                return 'c:\\agent\\home\\directory\\externals\\nuget\\nuget.exe';
-            },
-            stripLeadingAndTrailingQuotes: function(path) {
-                return path;
-            },
-            locateCredentialProvider: function(path) {
-                return 'c:\\agent\\home\\directory\\externals\\nuget\\CredentialProvider';
-            },
-            setConsoleCodePage: function() {
-                var tlm = require('vsts-task-lib/mock-task');
-                tlm.debug(`setting console code page`);
-            }
-        } );
-        
-        this.tmr.registerMock('./Utility', {
-            resolveToolPath: function(path) {
-                return path;
-            }
-        });
-    }
-    
     public registerNugetConfigMock() {
         var nchm = require('./NuGetConfigHelper-mock');
-        this.tmr.registerMock('nuget-task-common/NuGetConfigHelper', nchm);
+        this.tmr.registerMock('packaging-common/nuget/NuGetConfigHelper', nchm);
     }
     
     public registerToolRunnerMock() {
@@ -79,18 +64,5 @@ export class NugetMockHelper {
         a.exist["c:\\agent\\home\\directory\\externals\\nuget\\nuget.exe"] = true;
         a.exist["c:\\agent\\home\\directory\\externals\\nuget\\CredentialProvider\\CredentialProvider.TeamBuild.exe"] = true;
         this.tmr.setAnswers(a);
-    }
-
-    public registerNugetLocationHelpersMock() {
-        this.tmr.registerMock('utility-common/packaging/locationUtilities', {
-            getPackagingUris: function(input) {
-                const collectionUrl: string = "https://vsts/packagesource";
-                return {
-                    PackagingUris: [collectionUrl],
-                    DefaultPackagingUri: collectionUrl
-                };
-            },
-            ProtocolType: {NuGet: 1, Npm: 2, Maven: 3}
-        });
     }
 }

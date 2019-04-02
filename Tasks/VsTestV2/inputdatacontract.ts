@@ -24,6 +24,7 @@ export interface TestReportingSettings {
     TestRunTitle : string;
     TestResultsDirectory : string;
     TestRunSystem : string;
+    TestSourceSettings : TestSourceSettings;
 }
 
 export interface TestSelectionSettings {
@@ -102,9 +103,13 @@ export interface ExecutionSettings {
     DiagnosticsSettings : DiagnosticsSettings;
 }
 
+export interface TestSourceSettings {
+    PullRequestTargetBranchName : string;
+}
+
 export interface DiagnosticsSettings {
     Enabled : boolean;
-    CollectDumpAlways : boolean;
+    DumpCollectionType : string;
 }
 
 export interface TiaSettings {

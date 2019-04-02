@@ -3,6 +3,7 @@
     "name": "ManualIntervention",
     "friendlyName": "Manual Intervention",
     "description": "Pause deployment and wait for intervention",
+    "helpUrl": "https://go.microsoft.com/fwlink/?linkid=870234",
     "helpMarkDown": "[More Information](https://go.microsoft.com/fwlink/?linkid=870234)",
     "category": "Deploy",
     "visibility": [
@@ -15,7 +16,7 @@
     "version": {
         "Major": 8,
         "Minor": 2,
-        "Patch": 4
+        "Patch": 6
     },
     "inputs": [
         {
@@ -46,8 +47,8 @@
             "defaultValue": "reject",
             "required": false,
             "options": {
-               "reject": "Reject",
-               "resume": "Resume"
+                "reject": "Reject",
+                "resume": "Resume"
             },
             "helpMarkDown": "Reject or resume this manual intervention automatically after it is pending for the specified timeout or 60 days, whichever is earlier."
         }
